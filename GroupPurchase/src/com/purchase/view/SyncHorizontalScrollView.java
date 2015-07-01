@@ -1,4 +1,4 @@
-package com.matrix.view;
+package com.purchase.view;
 
 import android.app.Activity;
 import android.content.Context;
@@ -42,7 +42,7 @@ public class SyncHorizontalScrollView extends HorizontalScrollView {
 	}
 
 	/**
-	 * ÏÔÊ¾ºÍÒş²Ø×óÓÒÁ½±ßµÄ¼ıÍ·
+	 * æ˜¾ç¤ºå’Œéšè—å·¦å³ä¸¤è¾¹çš„ç®­å¤´
 	 */
 	public void showAndHideArrow() {
 		if (!mContext.isFinishing() && view != null) {
