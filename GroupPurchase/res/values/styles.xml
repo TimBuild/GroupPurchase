@@ -17,5 +17,13 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     
+    <style name="CommonTitleBarBackgroundStyle">
+        <item name="android:background">@color/common_title_bg_color</item>
+    </style>
+    
+    <style name="CommonTitleBarStyle" parent="android:Theme">
+        <item name="android:windowTitleSize">45dp</item>
+        <item name="android:windowTitleBackgroundStyle">@style/CommonTitleBarBackgroundStyle</item>
+    </style>
 
 </resources>

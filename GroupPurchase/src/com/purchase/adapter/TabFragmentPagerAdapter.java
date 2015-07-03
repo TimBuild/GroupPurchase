@@ -2,13 +2,13 @@ package com.purchase.adapter;
 
 import com.purchase.activity.MainActivity;
 import com.purchase.fragment.CommonUIFragment;
+import com.purchase.fragment.DressFragment;
 import com.purchase.fragment.LaunchUIFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
 import static com.purchase.activity.MainActivity.tabTitle;
 
 public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
@@ -22,7 +22,7 @@ public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 		Fragment ft = null;
 		switch (arg0) {
 		case 0:
-			ft = new LaunchUIFragment();
+			ft = new DressFragment();
 			break;
 
 		default:

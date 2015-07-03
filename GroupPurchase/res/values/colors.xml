@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="common_title_bg_color">#EB413D</color>
+    <color name="activity_main_blue">#5AB0EB</color>
+    <color name="activity_main_white_holo">#FAFAFA</color>
+    <color name="activity_main_white">#F6F6F6</color>
+    
+    
+    <color name="fragment_dress_bg">#F6F6F6</color>
+    <color name="fragment_dress_transport">#efefef</color>
+    <color name="fragment_dress_select">#DDE1E7</color>
+
+</resources>

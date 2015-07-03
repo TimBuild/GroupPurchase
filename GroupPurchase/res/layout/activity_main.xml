@@ -7,7 +7,7 @@
         android:id="@+id/lin_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#f2f2f2" >
+        android:background="@color/activity_main_white_holo" >
 
         <com.purchase.view.SyncHorizontalScrollView
             android:id="@+id/mHsv"
@@ -21,14 +21,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                android:background="#5AB0EB" >
+                android:background="@color/activity_main_blue" >
 
                 <RadioGroup
                     android:id="@+id/rg_nav_content"
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
                     android:layout_alignParentTop="true"
-                    android:background="#f2f2f2"
+                    android:background="@color/activity_main_white_holo"
                     android:orientation="horizontal" >
                 </RadioGroup>
 
@@ -37,7 +37,7 @@
                     android:layout_width="1dp"
                     android:layout_height="5dp"
                     android:layout_alignParentBottom="true"
-                    android:background="#5AB0EB"
+                    android:background="@color/activity_main_blue"
                     android:contentDescription="@string/nav_desc"
                     android:scaleType="matrix" />
             </RelativeLayout>
@@ -70,7 +70,9 @@
         android:id="@+id/main_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="35dp" >
+        android:layout_marginTop="35dp"
+        android:background="@color/activity_main_white"
+         >
     </android.support.v4.view.ViewPager>
 
 </RelativeLayout>

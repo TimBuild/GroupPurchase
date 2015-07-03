@@ -7,6 +7,11 @@
     <string name="nav_desc">nav_desc</string>
     <string name="common_intro">这是CommonUIFragment界面</string>
     <string name="launch_intro">这是第一个Fragment界面</string>
-     <string name="launch_click_me">我是一个按钮</string>
+    <string name="launch_click_me">我是一个按钮</string>
+
+    <!-- fragment_listview_footer.xml -->
+    <string name="character_load_full">已加载全部</string>
+    <string name="character_no_date">暂无数据</string>
+    <string name="character_more">加载中</string>
 
 </resources>
