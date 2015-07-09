@@ -10,5 +10,6 @@
     <color name="fragment_dress_bg">#F6F6F6</color>
     <color name="fragment_dress_transport">#efefef</color>
     <color name="fragment_dress_select">#DDE1E7</color>
+    <color name="transport">#EEF3FA</color>
 
 </resources>

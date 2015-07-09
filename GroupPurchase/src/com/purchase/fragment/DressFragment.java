@@ -8,11 +8,14 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.matrix.grouppurchase.R;
+import com.purchase.activity.DressActivity;
+import com.purchase.activity.DressWebView;
 import com.purchase.adapter.DressBaseAdapter;
 import com.purchase.entity.Dress;
 import com.purchase.server.DressManager;
 import com.purchase.view.DressListView;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,11 +43,15 @@ public class DressFragment extends Fragment implements OnRefreshListener2<GridVi
 	private final static int LOAD = 1;
 	private final static int REFRESH = 2;
 	
+	private boolean LOAD_FLAG = true;
+	
 	private List<Dress> listResults = new ArrayList<Dress>();
 	
 //	private MyHandler handler;
 	
 	private List<Dress> listExamples = new ArrayList<Dress>();
+	
+	private String path;
 	
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -68,37 +75,6 @@ public class DressFragment extends Fragment implements OnRefreshListener2<GridVi
 		};
 	};
 	
-//	private class MyHandler extends Handler{
-//		
-//		private DressBaseAdapter dressAdapter;
-//		public MyHandler(){
-//			
-//		}
-//		public MyHandler(DressBaseAdapter dressAdapter) {
-//			super();
-//			this.dressAdapter = dressAdapter;
-//		}
-//		
-////		public MyHandler(Looper looper){
-////			super(looper);
-////		}
-//		
-//		@Override
-//		public void handleMessage(Message msg) {
-//			switch (msg.what) {
-//			case REFRESH:
-//				List<Dress> lists = (List<Dress>) msg.obj;
-//				Log.d(TAG, "------>"+lists.toString());
-//				dressAdapter.setDressData(lists);
-//				dressAdapter.notifyDataSetChanged();
-//				break;
-//
-//			case LOAD:
-//				break;
-//			}
-//		}
-//		
-//	}
 	
 	
 	@Override
@@ -124,7 +100,7 @@ public class DressFragment extends Fragment implements OnRefreshListener2<GridVi
 		mPullToRefreshGridView.setOnRefreshListener(this);
 		
 //		loadData(REFRESH);
-		new GetMessage(REFRESH).execute(REFRESH);
+		new GetMessage(REFRESH).execute();
 		mPullToRefreshGridView.setOnItemClickListener(new GridViewItemClickListner());
 		
 		return rootView;
@@ -148,6 +124,32 @@ public class DressFragment extends Fragment implements OnRefreshListener2<GridVi
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			Log.d(TAG, "GridViewItemClickListner:"+listResults.get(position).toString());
+			
+			/*Intent intent = new Intent(getActivity(),DressActivity.class);
+			Dress dress = listResults.get(position);
+			String imageUrl = dress.getImageUrl();
+			String imagePath = dress.getImagePath();
+			String imageTitle = dress.getImageTitle();
+			String price_discount = dress.getPrice_discount();
+			String price = dress.getPrice();
+			intent.putExtra("dress_url", imageUrl);
+			intent.putExtra("dress_path", imagePath);
+			intent.putExtra("dress_title", imageTitle);
+			intent.putExtra("dress_discount", price_discount);
+			intent.putExtra("dress_price", price);*/
+			Intent intent = new Intent(getActivity(),DressWebView.class);
+			Dress dress = listResults.get(position);
+			String path = dress.getImagePath();
+			intent.putExtra("path", path);
+			startActivity(intent);
+			getActivity().overridePendingTransition(R.anim.in_from_right, R.anim.out_from_left);
+			
+//			new GetDress(intent).execute(dress.getImagePath());
+//			intent.putExtra("path", path);
+//			startActivity(intent);
+			
+			
+			
 		}
 		
 	}
@@ -174,8 +176,7 @@ public class DressFragment extends Fragment implements OnRefreshListener2<GridVi
 	public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
 		Log.d(TAG, "==onPullDownToRefresh刷新==");
 		
-//		loadData(REFRESH);
-		new GetMessage(REFRESH).execute(REFRESH);
+		new GetMessage(REFRESH).execute();
 	}
 
 	/* 加载更多
@@ -185,31 +186,9 @@ public class DressFragment extends Fragment implements OnRefreshListener2<GridVi
 	public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
 		Log.d(TAG, "==onPullDownToRefresh加载更多==");
 		
-//		loadData(LOAD);
-		new GetMessage(LOAD).execute(LOAD);
+		new GetMessage(LOAD).execute();
 	}
 	
-	
-	/*private void loadData(final int what){
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				
-				Message msg = handler.obtainMessage();
-				msg.what = what;
-				List<Dress> dressList = DressManager.getDressByUrl(DressManager.url);
-				Log.d(TAG, "loadData:-->"+dressList.size());
-				msg.obj = dressList;
-				handler.sendMessage(msg);
-			}
-		}).start();
-	}*/
 	
 	private class GetMessage extends AsyncTask<Integer, Void, List<Dress>>{
 		
@@ -222,10 +201,15 @@ public class DressFragment extends Fragment implements OnRefreshListener2<GridVi
 		protected List<Dress> doInBackground(Integer... params) {
 			
 			List<Dress> dressList = null;
-			if(params[0] == REFRESH){
-				dressList = DressManager.getDressByUrl(DressManager.url);
-			}else if(params[0]==LOAD){
-				dressList = DressManager.getDressByUrl(DressManager.url_load);
+			if(method == REFRESH){
+				dressList = DressManager.getDressByUrl(DressManager.dress_url);
+			}else if(method == LOAD){
+				if(LOAD_FLAG == true){
+					dressList = DressManager.getDressByUrl(DressManager.dress_url_load);
+					LOAD_FLAG = false;
+				}else{
+					dressList = new ArrayList<Dress>();
+				}
 			}
 //			Log.d(TAG, dressList.toString());
 			
@@ -243,7 +227,6 @@ public class DressFragment extends Fragment implements OnRefreshListener2<GridVi
 				handler.sendMessage(msg);
 			}
 			
-//			mPullToRefreshGridView.onRefreshComplete();
 		}
 		
 	}

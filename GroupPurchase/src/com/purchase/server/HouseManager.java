@@ -9,26 +9,24 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.purchase.entity.Dress;
+import com.purchase.entity.House;
 
-public class DressManager {
-	public static String dress_url = "http://www.jiukuaiyou.com/jiu/fushi/whole/1";
-	public static String dress_url_load = "http://www.jiukuaiyou.com/jiu/fushi/whole/2";
+public class HouseManager {
+	public static String house_url_refresh = "http://www.jiukuaiyou.com/jiu/jujia/whole/1";
+	public static String house_url_load = "http://www.jiukuaiyou.com/jiu/jujia/whole/2";
 	
 	
-	public static List<Dress> getDressByUrl(String url){
-		
-//		System.out.println("url:"+url);
-		
-		List<Dress> dresses = new ArrayList<Dress>();
-		Dress dress;
+	
+	public static List<House> getHouseByUrl(String url){
+		List<House> houses = new ArrayList<House>();
+		House house;
 		
 		String parseHtml = ParseHtml.getHtmlContent(url, "utf-8");
 		Document doc = Jsoup.parse(parseHtml);
-		
-		
 		Elements contents = doc.select("div.main>ul.goods-list>li");
+		
 		for(Element content:contents){
-			dress = new Dress();
+			house = new House();
 			Elements images = content.getElementsByClass("pic-img");
 			//http://www.jiukuaiyou.com/deal/79301624
 //			String imagePath = images.select("a").first().attr("href");
@@ -53,29 +51,15 @@ public class DressManager {
 			
 			String imagePath = prices.select("div>a").first().attr("href");
 			
-			dress.setImagePath(imagePath);
-			dress.setImageUrl(imageUrl);
-			dress.setImageTitle(imageTitle);
-			dress.setPrice_discount(price_discount);
-			dress.setPrice(price);
+			house.setImagePath(imagePath);
+			house.setImageUrl(imageUrl);
+			house.setImageTitle(imageTitle);
+			house.setPrice(price);
+			house.setPrice_discount(price_discount);
 			
-			dresses.add(dress);
+			houses.add(house);
+			
 		}
-//		System.out.println("网页文本: "+dresses.toString());
-		return dresses;
-		
-	}
-	
-	public static String getDetailDress(String url){
-		System.out.println("getDetailDress:url-->"+url);
-		
-		String parseHtml = ParseHtml.getHtmlContent(url, "utf-8");
-		Document doc = Jsoup.parse(parseHtml);
-		Elements contents = doc.select("div.price-info>p.btn");
-		String path = contents.select("a").first().attr("href");
-		System.out.println(path);
-		
-		return path;
-		
+		return houses;
 	}
 }

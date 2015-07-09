@@ -1,26 +1,28 @@
 package com.purchase.activity;
 
-import com.matrix.grouppurchase.R;
-import com.purchase.adapter.TabFragmentPagerAdapter;
-import com.purchase.view.SyncHorizontalScrollView;
-
-import android.R.integer;
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+import com.matrix.grouppurchase.R;
+import com.purchase.adapter.TabFragmentPagerAdapter;
+import com.purchase.view.SyncHorizontalScrollView;
 
 public class MainActivity extends FragmentActivity {
 
@@ -34,15 +36,22 @@ public class MainActivity extends FragmentActivity {
 	private LayoutInflater mInflater;
 
 	public static final String ARGUMENTS_NAME = "arg";
-	public static String[] tabTitle = { "女装", "选项2", "选项3", "选项4", "选项5","音乐" }; // 标题
+	public static String[] tabTitle = { "服装", "居家", "选项3", "选项4", "选项5","音乐" }; // 标题
 
 	private TabFragmentPagerAdapter mAdapter;
 	private int currentIndicatorLeft = 0;
+	private static boolean isExit = false; // 定义变量，判断是否退出
+	private final static int EXIT = 1;//退出的标志 
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.activity_main);
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.activity_main_title);
+		
+		
 
 		initView();
 		setListener();
@@ -146,4 +155,29 @@ public class MainActivity extends FragmentActivity {
 			rg_nav_content.addView(rb);
 		}
 	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (!isExit) {
+				isExit = true;
+				Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+				// 利用Handler延迟2秒发送更改消息
+				mainHandler.sendEmptyMessageDelayed(EXIT, 2000);
+			} else {
+				finish();
+			}
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	};
+	
+	@SuppressLint("HandlerLeak")
+	private Handler mainHandler = new Handler() {
+		public void handleMessage(Message msg) {
+			if (msg.what == EXIT) {
+				isExit = false; // 退出程序
+			} 
+		}
+	};
+
 }
