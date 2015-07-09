@@ -1,6 +1,7 @@
 package com.purchase.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -16,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.matrix.grouppurchase.R;
+import com.purchase.view.ProgressDialog;
 
 public class DressWebView extends Activity {
 
@@ -25,6 +27,7 @@ public class DressWebView extends Activity {
 	private RelativeLayout rl_back;
 	private static String TAG = "DressWebView";
 	private ProgressBar pb_webview;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,8 @@ public class DressWebView extends Activity {
 		webView = (WebView) findViewById(R.id.wv_dress);
 		pb_webview = (ProgressBar) findViewById(R.id.pb_webview);
 		pb_webview.setMax(100);
+		
+		
 		
 		rl_back.setOnClickListener(new OnClickListener() {
 			

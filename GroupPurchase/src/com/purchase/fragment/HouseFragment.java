@@ -9,11 +9,15 @@ import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.matrix.grouppurchase.R;
 import com.purchase.activity.DressWebView;
+import com.purchase.activity.MainActivity;
 import com.purchase.adapter.HouseBaseAdapter;
+import com.purchase.entity.Clothing;
 import com.purchase.entity.House;
 import com.purchase.server.HouseManager;
+import com.purchase.view.ProgressDialog;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import static com.purchase.global.Constants.*;
 
 public class HouseFragment extends Fragment implements
 		OnRefreshListener2<GridView> {
@@ -42,6 +47,13 @@ public class HouseFragment extends Fragment implements
 	private boolean LOAD_FLAG = true;
 
 	private List<House> listResults = new ArrayList<House>();
+	
+	private String refresh_url,load_url;
+	
+	private Dialog pDialog;
+	
+	protected boolean isVisible;
+	
 
 	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler() {
@@ -66,6 +78,16 @@ public class HouseFragment extends Fragment implements
 			houseAdapter.notifyDataSetChanged();
 		};
 	};
+	
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		Log.d(TAG, "setUserVisibleHint:"+isVisibleToUser);
+		if(isVisibleToUser){
+			pDialog = ProgressDialog.createLoadingDialog(getActivity(), "正在刷新中...");
+		}
+	};
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,18 +100,33 @@ public class HouseFragment extends Fragment implements
 
 		// 初始化数据源
 		initIndicator();
+		
+		/*pDialog = ProgressDialog.createLoadingDialog(getActivity(), "正在刷新中...");*/
+		
+		Bundle bundle = getArguments();
+		String index = bundle.getString(MainActivity.TITLE_NAME, "");
+		String splice_url = Clothing.getClothingName(index);
+		refresh_url = BASE_URL+splice_url+URL_REFRESH;
+		load_url = BASE_URL+splice_url+URL_LOAD;
+//		Log.d(TAG, "refresh_url:"+refresh_url+"---load_url:"+load_url);
 
 		houseAdapter = new HouseBaseAdapter(getActivity(),
 				mPullToRefreshGridView);
 		mPullToRefreshGridView.setAdapter(houseAdapter);
 
 		mPullToRefreshGridView.setOnRefreshListener(this);
-
-		new GetHouse(REFRESH).execute();
-		
+//		Log.i(TAG, "setUserVisibleHint:Dialog:"+pDialog);
+//		new GetHouse(REFRESH).execute(refresh_url);
 		mPullToRefreshGridView.setOnItemClickListener(new GridViewItemClickListener());
 
 		return rootView;
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		Log.i(TAG, "setUserVisibleHint:Dialog:"+pDialog);
+		new GetHouse(REFRESH).execute(refresh_url);
 	}
 	
 	private class GridViewItemClickListener implements OnItemClickListener{
@@ -123,26 +160,34 @@ public class HouseFragment extends Fragment implements
 		endLayout.setReleaseLabel("松开加载");
 	}
 
-	private class GetHouse extends AsyncTask<Integer, Void, List<House>> {
+	private class GetHouse extends AsyncTask<String, Void, List<House>> {
 
 		private Integer method;
-
+		
 		public GetHouse(Integer params) {
 			this.method = params;
 		}
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if(pDialog!=null){
+				pDialog.show();
+			}
+		}
+
 
 		@Override
-		protected List<House> doInBackground(Integer... params) {
+		protected List<House> doInBackground(String... params) {
 			List<House> houses = null;
 
 			if (method == REFRESH) {
 
 				houses = HouseManager
-						.getHouseByUrl(HouseManager.house_url_refresh);
+						.getHouseByUrl(params[0]);
 			} else if (method == LOAD) {
 				if (LOAD_FLAG == true) {
 					houses = HouseManager
-							.getHouseByUrl(HouseManager.house_url_load);
+							.getHouseByUrl(params[0]);
 					LOAD_FLAG = false;
 				} else {
 					houses = new ArrayList<House>();
@@ -155,6 +200,10 @@ public class HouseFragment extends Fragment implements
 		@Override
 		protected void onPostExecute(List<House> result) {
 			super.onPostExecute(result);
+			if(pDialog!=null){
+				pDialog.dismiss();
+				pDialog = null;
+			}
 			if (result != null) {
 				Message msg = handler.obtainMessage();
 				msg.what = method;
@@ -167,11 +216,11 @@ public class HouseFragment extends Fragment implements
 
 	@Override
 	public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
-		new GetHouse(REFRESH).execute();
+		new GetHouse(REFRESH).execute(refresh_url);
 	}
 
 	@Override
 	public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
-		new GetHouse(LOAD).execute();
+		new GetHouse(LOAD).execute(load_url);
 	}
 }

@@ -6,13 +6,16 @@
     android:gravity="center"
     android:orientation="vertical" >
 
-<!--     <include layout="@layout/activity_main_title"/> -->
+    <!-- <include layout="@layout/activity_main_title"/> -->
 
     <ProgressBar
         android:id="@+id/pb_webview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:indeterminateBehavior="repeat"
+        android:indeterminateDrawable="@drawable/progress_bg"
+        android:indeterminateOnly="true"
         android:visibility="visible" />
 
     <WebView

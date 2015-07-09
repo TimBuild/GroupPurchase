@@ -14,7 +14,9 @@ import com.purchase.adapter.DressBaseAdapter;
 import com.purchase.entity.Dress;
 import com.purchase.server.DressManager;
 import com.purchase.view.DressListView;
+import com.purchase.view.ProgressDialog;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -51,6 +53,8 @@ public class DressFragment extends Fragment implements OnRefreshListener2<GridVi
 	
 	private List<Dress> listExamples = new ArrayList<Dress>();
 	
+	private Dialog pDialog;
+	
 	private String path;
 	
 	private Handler handler = new Handler() {
@@ -75,7 +79,14 @@ public class DressFragment extends Fragment implements OnRefreshListener2<GridVi
 		};
 	};
 	
-	
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		Log.d(TAG, "setUserVisibleHint:"+isVisibleToUser);
+		if(isVisibleToUser){
+			pDialog = ProgressDialog.createLoadingDialog(getActivity(), "正在刷新中...");
+		}
+	};
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,7 +100,7 @@ public class DressFragment extends Fragment implements OnRefreshListener2<GridVi
 		//初始化数据源
 		initIndicator();
 		
-		
+//		pDialog = ProgressDialog.createLoadingDialog(getActivity(), "正在刷新中...");
 		
 		
 		dressAdapter = new DressBaseAdapter(getActivity(),mPullToRefreshGridView);
@@ -196,6 +207,14 @@ public class DressFragment extends Fragment implements OnRefreshListener2<GridVi
 		public GetMessage(Integer params){
 			this.method = params;
 		}
+		
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if(pDialog!=null){
+				pDialog.show();
+			}
+		}
 
 		@Override
 		protected List<Dress> doInBackground(Integer... params) {
@@ -220,6 +239,10 @@ public class DressFragment extends Fragment implements OnRefreshListener2<GridVi
 		protected void onPostExecute(List<Dress> result) {
 			super.onPostExecute(result);
 //			Log.d(TAG, "result:"+result);
+			if(pDialog!=null){
+				pDialog.dismiss();
+				pDialog=null;
+			}
 			if(result!=null){
 				Message msg = handler.obtainMessage();
 				msg.what = method;

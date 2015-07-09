@@ -1,7 +1,6 @@
 package com.purchase.adapter;
 
 import com.purchase.activity.MainActivity;
-import com.purchase.fragment.CommonUIFragment;
 import com.purchase.fragment.DressFragment;
 import com.purchase.fragment.HouseFragment;
 
@@ -24,13 +23,10 @@ public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 		case 0://服装
 			ft = new DressFragment();
 			break;
-		case 1://居家
-			ft = new HouseFragment();
-			break;
 		default:
-			ft = new CommonUIFragment();
+			ft = new HouseFragment();
 			Bundle args = new Bundle();
-			args.putString(MainActivity.ARGUMENTS_NAME, tabTitle[arg0]);
+			args.putString(MainActivity.TITLE_NAME, tabTitle[arg0]);
 			ft.setArguments(args);
 			break;
 		}

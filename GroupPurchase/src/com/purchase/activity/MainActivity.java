@@ -35,8 +35,8 @@ public class MainActivity extends FragmentActivity {
 	private int indicatorWidth;
 	private LayoutInflater mInflater;
 
-	public static final String ARGUMENTS_NAME = "arg";
-	public static String[] tabTitle = { "服装", "居家", "选项3", "选项4", "选项5","音乐" }; // 标题
+	public static final String TITLE_NAME = "title_name";
+	public static String[] tabTitle = { "服装", "居家", "母婴", "美食", "鞋包配饰","美妆","数码电器","文体" }; // 标题
 
 	private TabFragmentPagerAdapter mAdapter;
 	private int currentIndicatorLeft = 0;
