@@ -50,6 +50,7 @@ public class HouseManager {
 			String price = price_before.replace("拍下改价 ", "");
 			
 			String imagePath = prices.select("div>a").first().attr("href");
+			imagePath = imagePath+"&person=new";
 			
 			house.setImagePath(imagePath);
 			house.setImageUrl(imageUrl);

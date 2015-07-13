@@ -13,6 +13,7 @@ import com.purchase.activity.DressWebView;
 import com.purchase.adapter.DressBaseAdapter;
 import com.purchase.entity.Dress;
 import com.purchase.server.DressManager;
+import com.purchase.util.NetWorkUtil;
 import com.purchase.view.DressListView;
 import com.purchase.view.ProgressDialog;
 
@@ -32,6 +33,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.Toast;
 
 public class DressFragment extends Fragment implements OnRefreshListener2<GridView>{
 	
@@ -111,7 +113,11 @@ public class DressFragment extends Fragment implements OnRefreshListener2<GridVi
 		mPullToRefreshGridView.setOnRefreshListener(this);
 		
 //		loadData(REFRESH);
-		new GetMessage(REFRESH).execute();
+		if(NetWorkUtil.isNetworkAvailable(getActivity())){
+			new GetMessage(REFRESH).execute();
+		}else{
+			NetWorkUtil.showNoNetWorkDialog(getActivity());
+		}
 		mPullToRefreshGridView.setOnItemClickListener(new GridViewItemClickListner());
 		
 		return rootView;
@@ -220,15 +226,20 @@ public class DressFragment extends Fragment implements OnRefreshListener2<GridVi
 		protected List<Dress> doInBackground(Integer... params) {
 			
 			List<Dress> dressList = null;
-			if(method == REFRESH){
-				dressList = DressManager.getDressByUrl(DressManager.dress_url);
-			}else if(method == LOAD){
-				if(LOAD_FLAG == true){
-					dressList = DressManager.getDressByUrl(DressManager.dress_url_load);
-					LOAD_FLAG = false;
-				}else{
-					dressList = new ArrayList<Dress>();
+			if(NetWorkUtil.isNetworkAvailable(getActivity())){
+				
+				if(method == REFRESH){
+					dressList = DressManager.getDressByUrl(DressManager.dress_url);
+				}else if(method == LOAD){
+					if(LOAD_FLAG == true){
+						dressList = DressManager.getDressByUrl(DressManager.dress_url_load);
+						LOAD_FLAG = false;
+					}else{
+						dressList = new ArrayList<Dress>();
+					}
 				}
+			}else{
+				Log.e(TAG, "请打开网络连接!");
 			}
 //			Log.d(TAG, dressList.toString());
 			

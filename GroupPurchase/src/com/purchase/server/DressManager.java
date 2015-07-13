@@ -52,6 +52,7 @@ public class DressManager {
 			String price = price_before.replace("拍下改价 ", "");
 			
 			String imagePath = prices.select("div>a").first().attr("href");
+			imagePath = imagePath+"&person=new";
 			
 			dress.setImagePath(imagePath);
 			dress.setImageUrl(imageUrl);

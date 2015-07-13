@@ -14,6 +14,7 @@ import com.purchase.adapter.HouseBaseAdapter;
 import com.purchase.entity.Clothing;
 import com.purchase.entity.House;
 import com.purchase.server.HouseManager;
+import com.purchase.util.NetWorkUtil;
 import com.purchase.view.ProgressDialog;
 
 import android.annotation.SuppressLint;
@@ -29,6 +30,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import static com.purchase.global.Constants.*;
@@ -126,7 +128,12 @@ public class HouseFragment extends Fragment implements
 	public void onStart() {
 		super.onStart();
 		Log.i(TAG, "setUserVisibleHint:Dialog:"+pDialog);
-		new GetHouse(REFRESH).execute(refresh_url);
+		if(NetWorkUtil.isNetworkAvailable(getActivity())){
+			new GetHouse(REFRESH).execute(refresh_url);
+		}else{
+//			Toast.makeText(getActivity(), "请打开网络连接", Toast.LENGTH_SHORT).show();
+			NetWorkUtil.showNoNetWorkDialog(getActivity());
+		}
 	}
 	
 	private class GridViewItemClickListener implements OnItemClickListener{
@@ -179,21 +186,27 @@ public class HouseFragment extends Fragment implements
 		@Override
 		protected List<House> doInBackground(String... params) {
 			List<House> houses = null;
-
-			if (method == REFRESH) {
-
-				houses = HouseManager
-						.getHouseByUrl(params[0]);
-			} else if (method == LOAD) {
-				if (LOAD_FLAG == true) {
+			
+			if(NetWorkUtil.isNetworkAvailable(getActivity())){
+				if (method == REFRESH) {
+					
 					houses = HouseManager
 							.getHouseByUrl(params[0]);
-					LOAD_FLAG = false;
-				} else {
-					houses = new ArrayList<House>();
+				} else if (method == LOAD) {
+					if (LOAD_FLAG == true) {
+						houses = HouseManager
+								.getHouseByUrl(params[0]);
+						LOAD_FLAG = false;
+					} else {
+						houses = new ArrayList<House>();
+					}
 				}
+				Log.d(TAG, houses.toString());
+				
+			}else{
+				Log.e(TAG, "请打开网络连接!");
 			}
-			Log.d(TAG, houses.toString());
+
 			return houses;
 		}
 
