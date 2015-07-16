@@ -1,15 +1,5 @@
 package com.purchase.activity;
 
-import com.alibaba.sdk.android.AlibabaSDK;
-import com.alibaba.sdk.android.callback.CallbackContext;
-import com.alibaba.sdk.android.callback.InitResultCallback;
-import com.alibaba.sdk.android.login.LoginService;
-import com.alibaba.sdk.android.login.callback.LoginCallback;
-import com.alibaba.sdk.android.session.model.Session;
-import com.matrix.grouppurchase.R;
-import com.purchase.server.DressManager;
-import com.squareup.picasso.Picasso;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -20,7 +10,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.matrix.grouppurchase.R;
+import com.purchase.server.DressManager;
+import com.squareup.picasso.Picasso;
 
 public class DressActivity extends Activity{
 	
@@ -92,7 +85,7 @@ public class DressActivity extends Activity{
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		CallbackContext.onActivityResult(requestCode, resultCode, data);
+//		CallbackContext.onActivityResult(requestCode, resultCode, data);
 	}
 
 	/**

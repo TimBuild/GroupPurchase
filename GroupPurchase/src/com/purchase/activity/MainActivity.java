@@ -1,6 +1,7 @@
 package com.purchase.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +11,8 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.animation.LinearInterpolator;
@@ -20,14 +23,16 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.alibaba.sdk.android.AlibabaSDK;
 import com.matrix.grouppurchase.R;
 import com.purchase.adapter.TabFragmentPagerAdapter;
 import com.purchase.view.SyncHorizontalScrollView;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements OnClickListener{
 
 //	private LinearLayout lin_main, lin_tab, lin_nav;
-	private RelativeLayout rl_nav;
+	private RelativeLayout rl_nav,rl_title_left,rl_title_right;
 	private ImageView iv_nav_left, iv_nav_right, iv_nav_indicator;
 	private SyncHorizontalScrollView shScrollView;
 	private RadioGroup rg_nav_content;
@@ -36,7 +41,7 @@ public class MainActivity extends FragmentActivity {
 	private LayoutInflater mInflater;
 
 	public static final String TITLE_NAME = "title_name";
-	public static String[] tabTitle = { "服装", "居家", "母婴", "美食", "鞋包配饰","美妆","数码电器","文体" }; // 标题
+	public static String[] tabTitle = { "淘宝","服装", "居家", "母婴", "美食", "鞋包配饰","美妆","数码电器","文体" }; // 标题
 
 	private TabFragmentPagerAdapter mAdapter;
 	private int currentIndicatorLeft = 0;
@@ -51,11 +56,15 @@ public class MainActivity extends FragmentActivity {
 		setContentView(R.layout.activity_main);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.activity_main_title);
 		
+		AlibabaSDK.asyncInit(this);
 		
+		initTitleView();
 
 		initView();
 		setListener();
 	}
+
+	
 
 	private void setListener() {
 		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
@@ -109,6 +118,14 @@ public class MainActivity extends FragmentActivity {
 						}
 					}
 				});
+	}
+	
+	private void initTitleView() {
+		rl_title_left = (RelativeLayout) findViewById(R.id.rel_main_title_left);
+		rl_title_right = (RelativeLayout) findViewById(R.id.rel_main_title_right);
+		
+		rl_title_left.setOnClickListener(this);
+		rl_title_right.setOnClickListener(this);
 	}
 
 	private void initView() {
@@ -179,5 +196,21 @@ public class MainActivity extends FragmentActivity {
 			} 
 		}
 	};
+
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		//main_title左边的按钮
+		case R.id.rel_main_title_left:
+			Toast.makeText(this, "左键", Toast.LENGTH_SHORT).show();
+			break;
+		//main_title右边的按钮
+		case R.id.rel_main_title_right:
+			Intent intent = new Intent(this, TaoBaoActivity.class);
+			startActivity(intent);
+			break;
+		}
+	}
 
 }

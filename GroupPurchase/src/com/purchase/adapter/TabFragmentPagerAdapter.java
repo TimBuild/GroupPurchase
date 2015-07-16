@@ -3,6 +3,7 @@ package com.purchase.adapter;
 import com.purchase.activity.MainActivity;
 import com.purchase.fragment.DressFragment;
 import com.purchase.fragment.HouseFragment;
+import com.purchase.fragment.TaoBaoFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,7 +22,8 @@ public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 		Fragment ft = null;
 		switch (arg0) {
 		case 0://服装
-			ft = new DressFragment();
+//			ft = new DressFragment();
+			ft = new TaoBaoFragment();
 			break;
 		default:
 			ft = new HouseFragment();

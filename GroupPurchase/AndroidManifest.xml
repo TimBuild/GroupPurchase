@@ -29,6 +29,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.alibaba.sdk.android.trade.ui.TradeWebViewActivity"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
             android:name="com.purchase.activity.DressActivity"
             android:screenOrientation="portrait" >
         </activity>
@@ -36,6 +40,10 @@
             android:name="com.purchase.activity.DressWebView"
             android:screenOrientation="portrait"
             android:theme="@style/CommonTitleBarStyle" >
+        </activity>
+        <activity
+            android:name="com.purchase.activity.TaoBaoActivity"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

@@ -49,7 +49,9 @@ public class HouseManager {
 			//￥68 (1.5折)
 			String price = price_before.replace("拍下改价 ", "");
 			
+			//http://www.jiukuaiyou.com/click/?id=76931884
 			String imagePath = prices.select("div>a").first().attr("href");
+			//http://www.jiukuaiyou.com/click/?id=76931884&person=new
 			imagePath = imagePath+"&person=new";
 			
 			house.setImagePath(imagePath);
