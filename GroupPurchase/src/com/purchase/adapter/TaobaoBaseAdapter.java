@@ -41,7 +41,7 @@ public class TaobaoBaseAdapter extends BaseAdapter{
 		this.mDressLists = new ArrayList<GoodsItem>();
 	}
 	
-	public void setDressData(List<GoodsItem> lists){
+	public void setGoodsData(List<GoodsItem> lists){
 //		this.mDressLists.clear();
 //		this.mDressLists.addAll(lists);
 		this.mDressLists = lists;
@@ -89,6 +89,8 @@ public class TaobaoBaseAdapter extends BaseAdapter{
 //		Log.d(TAG, "---position--->"+position);
 		return convertView;
 	}
+	
+	
 	
 	
 	public class ViewHolder{

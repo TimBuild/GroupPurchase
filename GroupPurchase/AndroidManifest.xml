@@ -45,6 +45,10 @@
             android:name="com.purchase.activity.TaoBaoActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.purchase.activity.TaoBaoItemActivity"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

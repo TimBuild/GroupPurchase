@@ -41,7 +41,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 	private LayoutInflater mInflater;
 
 	public static final String TITLE_NAME = "title_name";
-	public static String[] tabTitle = { "淘宝","服装", "居家", "母婴", "美食", "鞋包配饰","美妆","数码电器","文体" }; // 标题
+	public static String[] tabTitle = { "服装", "居家", "母婴", "美食", "鞋包配饰","美妆","数码电器","文体" }; // 标题
 
 	private TabFragmentPagerAdapter mAdapter;
 	private int currentIndicatorLeft = 0;
@@ -55,7 +55,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.activity_main);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.activity_main_title);
-		
+		//注册sdk，否则sdk无法调用
 		AlibabaSDK.asyncInit(this);
 		
 		initTitleView();

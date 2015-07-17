@@ -22,8 +22,8 @@ public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 		Fragment ft = null;
 		switch (arg0) {
 		case 0://服装
-//			ft = new DressFragment();
-			ft = new TaoBaoFragment();
+			ft = new DressFragment();
+//			ft = new TaoBaoFragment();
 			break;
 		default:
 			ft = new HouseFragment();

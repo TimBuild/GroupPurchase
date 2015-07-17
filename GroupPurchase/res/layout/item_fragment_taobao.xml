@@ -26,6 +26,7 @@
                 android:contentDescription="@string/nav_desc"
                 android:maxHeight="150dp"
                 android:paddingBottom="1dp"
+                android:scaleType="centerInside"
                 android:src="@drawable/dress_blank" />
 
             <TextView
