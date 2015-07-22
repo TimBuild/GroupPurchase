@@ -12,6 +12,8 @@ import com.matrix.grouppurchase.R;
 import com.purchase.adapter.TaobaoItemAdapter;
 import com.purchase.fragment.TaoBaoShowFragment;
 
+import static com.purchase.global.Constants.taobaoTitle;
+
 public class TaoBaoActivity extends FragmentActivity implements
 		OnItemClickListener {
 
@@ -22,9 +24,6 @@ public class TaoBaoActivity extends FragmentActivity implements
 
 	private TaobaoItemAdapter mAdapter;
 	private TaoBaoShowFragment mFragment;
-
-	public String[] taobaoTitle = { "男装", "服装", "居家", "母婴", "美食", "鞋包配饰", "美妆",
-			"数码电器", "文体" }; // 标题
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

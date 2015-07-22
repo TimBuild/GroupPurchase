@@ -4,40 +4,29 @@
     android:layout_height="fill_parent"
     android:background="@color/fragment_dress_bg"
     android:orientation="vertical" >
-    
-    <!--  
 
-    <com.purchase.view.DressListView
-        android:id="@+id/dresslistView"
+    <include layout="@layout/activity_taobao_item_title" />
+
+    <com.handmark.pulltorefresh.library.PullToRefreshGridView
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/dressGridView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:cacheColorHint="@color/fragment_dress_transport"
-        android:divider="@null"
-        android:dividerHeight="5dp"
-        android:listSelector="@color/fragment_dress_select" >
-    </com.purchase.view.DressListView>
--->
-
-	<com.handmark.pulltorefresh.library.PullToRefreshGridView
-	    xmlns:ptr="http://schemas.android.com/apk/res-auto"
-	    android:id="@+id/dressGridView"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:gravity="center_horizontal"
-	    android:horizontalSpacing="3dp"
-	    android:listSelector="#ff0000"
-	    android:numColumns="2"
-	    android:stretchMode="columnWidth"
-	    android:verticalSpacing="10dp"
-	    ptr:ptrAnimationStyle="flip"
-	    ptr:ptrHeaderBackground="@color/fragment_dress_bg"
-	    ptr:ptrHeaderSubTextColor="#ff0000"
-	    ptr:ptrHeaderTextColor="#939393"
-	    ptr:ptrListViewExtrasEnabled="false"
-	    ptr:ptrMode="both"
-	    ptr:ptrRefreshableViewBackground="@color/fragment_dress_bg"
-	    ptr:ptrScrollingWhileRefreshingEnabled="true"
-	    ptr:ptrShowIndicator="false" >
-	</com.handmark.pulltorefresh.library.PullToRefreshGridView>
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:horizontalSpacing="3dp"
+        android:listSelector="#ff0000"
+        android:numColumns="2"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp"
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrHeaderBackground="@color/fragment_dress_bg"
+        ptr:ptrHeaderSubTextColor="#ff0000"
+        ptr:ptrHeaderTextColor="#939393"
+        ptr:ptrListViewExtrasEnabled="false"
+        ptr:ptrMode="both"
+        ptr:ptrRefreshableViewBackground="@color/fragment_dress_bg"
+        ptr:ptrScrollingWhileRefreshingEnabled="true"
+        ptr:ptrShowIndicator="false" >
+    </com.handmark.pulltorefresh.library.PullToRefreshGridView>
 
 </LinearLayout>

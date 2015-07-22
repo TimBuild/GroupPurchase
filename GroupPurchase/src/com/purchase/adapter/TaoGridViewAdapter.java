@@ -35,6 +35,7 @@ public class TaoGridViewAdapter extends BaseAdapter {
 	private static String TAG = "TaoGridViewAdapter";
 	
 	public static String TAGID = "GridView_tagid";
+	public static String TITLE = "GridView_title";
 
 	private String[] titles;
 	private int[] images;
@@ -69,12 +70,21 @@ public class TaoGridViewAdapter extends BaseAdapter {
 	public void setString(String str){
 		this.str = str;
 		pictures = new ArrayList<TaoPicture>();
-		if(str.equals("男装")){
+		if(str.equals("男士")){
 			titles = Constants.man;
 			images = Constants.man_img;
-		}else if(str.equals("居家")){
-			titles = Constants.clothing;
-			images = Constants.clothing_img;
+		}else if(str.equals("女装")){
+			titles = Constants.woman;
+			images = Constants.woman_img;
+		}else if(str.equals("鞋子")){
+			titles = Constants.shoe;
+			images = Constants.shoe_img;
+		}else if(str.equals("包包")){
+			titles = Constants.baobao;
+			images = Constants.baobao_img;
+		}else if(str.equals("配饰")){
+			titles = Constants.peishi;
+			images = Constants.peishi_img;
 		}else{
 			titles = Constants.meihzuang;
 			images = Constants.meihzuang_img;
@@ -115,10 +125,11 @@ public class TaoGridViewAdapter extends BaseAdapter {
 				
 				Intent intent = new Intent(context, TaoBaoItemActivity.class);
 				intent.putExtra(TAGID, tagId);
+				intent.putExtra(TITLE, title);
 				
 				context.startActivity(intent);
 				
-				Toast.makeText(context,tagId, Toast.LENGTH_SHORT).show();
+//				Toast.makeText(context,tagId, Toast.LENGTH_SHORT).show();
 			}
 		});
 		return convertView;

@@ -2,12 +2,13 @@ package com.purchase.activity;
 
 import static com.purchase.global.Constants.PAGE_SIZE;
 import static com.purchase.global.Constants.TAOBAO_URL;
+import static com.purchase.adapter.TaoGridViewAdapter.TAGID;
+import static com.purchase.adapter.TaoGridViewAdapter.TITLE;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import com.alibaba.sdk.android.AlibabaSDK;
 import com.alibaba.sdk.android.trade.ItemService;
 import com.alibaba.sdk.android.trade.callback.TradeProcessCallback;
@@ -25,7 +26,7 @@ import com.purchase.util.HttpUtil;
 import com.purchase.util.NetWorkUtil;
 import com.purchase.view.ProgressDialog;
 import com.taobao.tae.sdk.webview.TaeWebViewUiSettings;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.AsyncTask;
@@ -34,8 +35,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class TaoBaoItemActivity extends Activity implements
@@ -45,6 +50,8 @@ public class TaoBaoItemActivity extends Activity implements
 	private TaobaoBaseAdapter taobaoAdapter;
 
 	private PullToRefreshGridView mPullToRefreshGridView;
+	private TextView tv_title;
+	private RelativeLayout rl_back;
 
 	private final static int LOAD = 1;
 	private final static int REFRESH = 2;
@@ -57,6 +64,8 @@ public class TaoBaoItemActivity extends Activity implements
 	private int page_size = PAGE_SIZE;
 
 	private String tagId;
+	private String title;
+	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			@SuppressWarnings("unchecked")
@@ -85,10 +94,16 @@ public class TaoBaoItemActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_selection_taobao);
 		mPullToRefreshGridView = (PullToRefreshGridView) findViewById(R.id.dressGridView);
+		tv_title = (TextView) findViewById(R.id.title_menu_text);
+		rl_back = (RelativeLayout) findViewById(R.id.rl_back);
+		
 		// 初始化数据源
 		initIndicator();
 		
-		tagId = getIntent().getExtras().getString(TaoGridViewAdapter.TAGID, "3212");
+		tagId = getIntent().getExtras().getString(TAGID, "3212");
+		title = getIntent().getExtras().getString(TITLE,"");
+		
+		tv_title.setText(title);
 
 		taobaoAdapter = new TaobaoBaseAdapter(this, mPullToRefreshGridView);
 		mPullToRefreshGridView.setAdapter(taobaoAdapter);
@@ -104,6 +119,15 @@ public class TaoBaoItemActivity extends Activity implements
 		}
 		mPullToRefreshGridView
 				.setOnItemClickListener(new GridViewItemClickListner());
+		
+		rl_back.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+				overridePendingTransition(R.anim.in_from_left, R.anim.out_from_right);
+			}
+		});
 
 	};
 
@@ -124,7 +148,7 @@ public class TaoBaoItemActivity extends Activity implements
 
 	protected void showTaokeItemDetail(String open_id, int type) {
 		TaeWebViewUiSettings taeWebViewUiSettings = new TaeWebViewUiSettings();
-		taeWebViewUiSettings.title = "jsjdjijdijwidj";
+//		taeWebViewUiSettings.title = "jsjdjijdijwidj";
 		ItemService service = AlibabaSDK.getService(ItemService.class);
 		service.showItemDetailByOpenItemId(this, new TradeProcessCallback() {
 

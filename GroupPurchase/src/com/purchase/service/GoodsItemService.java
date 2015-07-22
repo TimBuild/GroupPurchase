@@ -22,7 +22,7 @@ public class GoodsItemService {
 				JSONObject jsonObject = new JSONObject(json);
 				JSONArray jsonArray = jsonObject.getJSONArray("goodsItem");
 
-				for (int i = 0; i < jsonArray.length(); i++) {
+				for (int i = 0; i < jsonArray.length()-1; i++) {
 					JSONObject jsonObject2 = jsonArray.getJSONObject(i);
 					String discount_price = (String) jsonObject2
 							.get("discount_price");
