@@ -1,9 +1,12 @@
-package com.purchase.activity;
+package com.purchase.fragment;
 
+import static com.purchase.global.Constants.taobaoTitle;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -13,32 +16,34 @@ import com.matrix.grouppurchase.R;
 import com.purchase.adapter.TaobaoItemAdapter;
 import com.purchase.subfragment.TaoBaoFragment;
 
-import static com.purchase.global.Constants.taobaoTitle;
-
-public class TaoBaoActivity extends FragmentActivity implements
+public class TaoBaoActivityFragment extends Fragment implements
 		OnItemClickListener {
 
-	private static String TAG = "TaoBaoActivity";
+	private static String TAG = "TaoBaoActivityFragment";
 
 	private ListView mListView;
 	public static int mPosition;
 
 	private TaobaoItemAdapter mAdapter;
 	private TaoBaoFragment mFragment;
-
+	
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_taobao);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.activity_taobao, container,false);
 		
-		initViews();
-
+		initViews(rootView);
+		//注册sdk，否则sdk无法调用
+		AlibabaSDK.asyncInit(getActivity());
+		return rootView;
 	}
 
-	private void initViews() {
-		mListView = (ListView) findViewById(R.id.lv_taobao);
 
-		mAdapter = new TaobaoItemAdapter(this, taobaoTitle);
+	private void initViews(View view) {
+		mListView = (ListView) view.findViewById(R.id.lv_taobao);
+
+		mAdapter = new TaobaoItemAdapter(getActivity(), taobaoTitle);
 		mListView.setAdapter(mAdapter);
 
 		mListView.setOnItemClickListener(this);
@@ -50,7 +55,7 @@ public class TaoBaoActivity extends FragmentActivity implements
 	}
 
 	private void createFragment(TaoBaoFragment fragment) {
-		FragmentTransaction transaction = getSupportFragmentManager()
+		FragmentTransaction transaction = getFragmentManager()
 				.beginTransaction();
 		transaction.replace(R.id.fl_taobao, fragment);
 		// 通过bundle传值给Fragment

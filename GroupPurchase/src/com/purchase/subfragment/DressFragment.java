@@ -1,4 +1,4 @@
-package com.purchase.fragment;
+package com.purchase.subfragment;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.purchase.fragment;
+package com.purchase.subfragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.matrix.grouppurchase.R;
 import com.purchase.activity.DressWebView;
-import com.purchase.activity.MainActivity;
+import com.purchase.activity.NinePostageActivity;
 import com.purchase.adapter.HouseBaseAdapter;
 import com.purchase.entity.Clothing;
 import com.purchase.entity.House;
@@ -106,7 +106,7 @@ public class HouseFragment extends Fragment implements
 		/*pDialog = ProgressDialog.createLoadingDialog(getActivity(), "正在刷新中...");*/
 		
 		Bundle bundle = getArguments();
-		String index = bundle.getString(MainActivity.TITLE_NAME, "");
+		String index = bundle.getString(NinePostageActivity.TITLE_NAME, "");
 		String splice_url = Clothing.getClothingName(index);
 		refresh_url = BASE_URL+splice_url+URL_REFRESH;
 		load_url = BASE_URL+splice_url+URL_LOAD;

@@ -44,7 +44,7 @@ public class Constants {
 			R.drawable.man_xiangshui };
 	public static String[] woman = new String[] { "连衣裙", "女士T恤", "女士衬衫",
 			"女士休闲裤", "女士西裤", "打底裤", "女士牛仔裤", "半身裙", "女士马甲", "雪纺衫/蕾丝衫", "毛针织衫",
-			"短外套", "女士毛衣", "女士风衣", "女士羽绒服", "女士棉服", "女士卫衣", "女士西装", "毛呢外套" };
+			"短外套", "女士毛衣", "女士风衣", "女士羽绒服", "女士棉服", "女士卫衣", "女士西装", "毛呢外套", "吊带背心", "长裙", "背带裤", "铅笔裤" };
 	public static int[] woman_img = new int[] { R.drawable.woman_lianyiqun,
 			R.drawable.woman_txu, R.drawable.woman_chenshan,
 			R.drawable.woman_xiuxianku, R.drawable.woman_xiku,
@@ -54,7 +54,9 @@ public class Constants {
 			R.drawable.woman_duanwaitao, R.drawable.woman_maoyi,
 			R.drawable.woman_fengyi, R.drawable.woman_yurongfu,
 			R.drawable.woman_mianfu, R.drawable.woman_weiyi,
-			R.drawable.woman_xizhuang, R.drawable.woman_maoniwaitao };
+			R.drawable.woman_xizhuang, R.drawable.woman_maoniwaitao,
+			R.drawable.woman_diaodai, R.drawable.woman_changqun,
+			R.drawable.woman_beidai, R.drawable.woman_qianbi };
 	public static String[] shoe = new String[] { "低帮鞋", "高帮鞋", "靴子", "凉鞋",
 			"拖鞋", "帆布鞋", "雨鞋", "篮球鞋", "足球鞋", "网球鞋", "休闲鞋/板鞋", "运动鞋", "跑步鞋",
 			"童鞋/青少年鞋", "羽毛球鞋", "其他运动鞋" };

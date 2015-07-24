@@ -29,6 +29,17 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.purchase.activity.NinePostageActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommonTitleBarStyle" >
+       <!--       <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+        <activity
             android:name="com.alibaba.sdk.android.trade.ui.TradeWebViewActivity"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>

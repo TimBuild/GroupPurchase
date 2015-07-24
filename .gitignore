@@ -25,3 +25,10 @@ proguard/
 
 # Log Files
 *.log
+/GroupPurchase/project.properties
+/GroupPurchase/.settings
+/GroupPurchase/assets
+/GroupPurchase/bin
+/GroupPurchase/gen
+/GroupPurchase/.classpath
+/GroupPurchase/.project

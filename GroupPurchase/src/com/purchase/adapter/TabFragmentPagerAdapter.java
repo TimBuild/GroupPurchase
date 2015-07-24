@@ -1,15 +1,14 @@
 package com.purchase.adapter;
 
-import com.purchase.activity.MainActivity;
-import com.purchase.fragment.DressFragment;
-import com.purchase.fragment.HouseFragment;
-import com.purchase.fragment.TaoBaoFragment;
+import com.purchase.activity.NinePostageActivity;
+import com.purchase.subfragment.DressFragment;
+import com.purchase.subfragment.HouseFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import static com.purchase.activity.MainActivity.tabTitle;
+import static com.purchase.activity.NinePostageActivity.tabTitle;
 
 public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 
@@ -23,12 +22,11 @@ public class TabFragmentPagerAdapter extends FragmentPagerAdapter {
 		switch (arg0) {
 		case 0://服装
 			ft = new DressFragment();
-//			ft = new TaoBaoFragment();
 			break;
 		default:
 			ft = new HouseFragment();
 			Bundle args = new Bundle();
-			args.putString(MainActivity.TITLE_NAME, tabTitle[arg0]);
+			args.putString(NinePostageActivity.TITLE_NAME, tabTitle[arg0]);
 			ft.setArguments(args);
 			break;
 		}

@@ -1,4 +1,4 @@
-package com.purchase.fragment;
+package com.purchase.subfragment;
 
 
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import android.widget.GridView;
 import com.matrix.grouppurchase.R;
 import com.purchase.adapter.TaoGridViewAdapter;
 
-public class TaoBaoShowFragment extends Fragment{
+public class TaoBaoFragment extends Fragment{
 	public static final String TAG = "TaoBaoShowFragment";
 	private String str;
 	
