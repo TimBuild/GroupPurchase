@@ -2,6 +2,8 @@ package com.purchase.adapter;
 
 import com.matrix.grouppurchase.R;
 import com.purchase.activity.TaoBaoActivity;
+import com.purchase.fragment.TaoBaoActivityFragment;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
@@ -45,7 +47,7 @@ public class TaobaoItemAdapter extends BaseAdapter {
 
 		TextView tv = (TextView) convertView.findViewById(R.id.tv_taobao);
 		tv.setText(strs[position]);
-		if (position == TaoBaoActivity.mPosition) {
+		if (position == TaoBaoActivityFragment.mPosition) {
 			convertView.setBackgroundResource(R.drawable.taobao_item_select_bg);
 			tv.setTextColor(Color.parseColor("#ee3939"));
 		} else {

@@ -85,9 +85,15 @@ public class TaoGridViewAdapter extends BaseAdapter {
 		}else if(str.equals("配饰")){
 			titles = Constants.peishi;
 			images = Constants.peishi_img;
-		}else{
+		}else if(str.equals("美妆")){
 			titles = Constants.meihzuang;
 			images = Constants.meihzuang_img;
+		}else if(str.equals("家居")){
+			titles = Constants.jiaju;
+			images = Constants.jiaju_img;
+		}else if(str.equals("母婴")){
+			titles = Constants.muying;
+			images = Constants.muying_img;
 		}
 		
 		for(int i=0;i<titles.length;i++){
