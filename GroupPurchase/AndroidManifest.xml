@@ -33,11 +33,14 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/CommonTitleBarStyle" >
-       <!--       <intent-filter>
+
+            <!--
+                  <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name="com.alibaba.sdk.android.trade.ui.TradeWebViewActivity"
@@ -59,8 +62,12 @@
         <activity
             android:name="com.purchase.activity.TaoBaoItemActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar"
-             >
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.purchase.activity.AiTaoBaoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
     </application>
 

@@ -1,14 +1,15 @@
 package com.purchase.activity;
 
-import static com.purchase.global.Constants.PAGE_SIZE;
-import static com.purchase.global.Constants.TAOBAO_URL;
 import static com.purchase.adapter.TaoGridViewAdapter.TAGID;
 import static com.purchase.adapter.TaoGridViewAdapter.TITLE;
+import static com.purchase.global.Constants.PAGE_SIZE;
+import static com.purchase.global.Constants.AiTAOBAO_URL;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import com.alibaba.sdk.android.AlibabaSDK;
 import com.alibaba.sdk.android.trade.ItemService;
 import com.alibaba.sdk.android.trade.callback.TradeProcessCallback;
@@ -18,14 +19,16 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.matrix.grouppurchase.R;
-import com.purchase.adapter.TaoGridViewAdapter;
+import com.purchase.adapter.AiTaobaoBaseAdapter;
 import com.purchase.adapter.TaobaoBaseAdapter;
-import com.purchase.entity.GoodsItem;
+import com.purchase.entity.AiTaoBao;
+import com.purchase.service.AiTaoBaoService;
 import com.purchase.service.GoodsItemService;
 import com.purchase.util.HttpUtil;
 import com.purchase.util.NetWorkUtil;
 import com.purchase.view.ProgressDialog;
 import com.taobao.tae.sdk.webview.TaeWebViewUiSettings;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -36,18 +39,18 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class TaoBaoItemActivity extends Activity implements
+public class AiTaoBaoActivity extends Activity implements
 		OnRefreshListener2<GridView> {
 
-	private static String TAG = "TaoBaoFragment";
-	private TaobaoBaseAdapter taobaoAdapter;
+
+	private static String TAG = "AiTaoBaoActivity";
+	private AiTaobaoBaseAdapter taobaoAdapter;
 
 	private PullToRefreshGridView mPullToRefreshGridView;
 	private TextView tv_title;
@@ -56,20 +59,20 @@ public class TaoBaoItemActivity extends Activity implements
 	private final static int LOAD = 1;
 	private final static int REFRESH = 2;
 
-	private List<GoodsItem> listResults = new ArrayList<GoodsItem>();
+	private List<AiTaoBao> listResults = new ArrayList<AiTaoBao>();
 
 	private Dialog pDialog;
 
-	private int page_start = 0;
+	private int page_start = 1;
 	private int page_size = PAGE_SIZE;
 
-	private String tagId;
-	private String title;
+//	private String tagId;
+//	private String title;
 	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			@SuppressWarnings("unchecked")
-			List<GoodsItem> lists = (List<GoodsItem>) msg.obj;
+			List<AiTaoBao> lists = (List<AiTaoBao>) msg.obj;
 			switch (msg.what) {
 			case REFRESH:
 
@@ -101,12 +104,12 @@ public class TaoBaoItemActivity extends Activity implements
 		// 初始化数据源
 		initIndicator();
 		
-		tagId = getIntent().getExtras().getString(TAGID, "3212");
-		title = getIntent().getExtras().getString(TITLE,"");
+//		tagId = getIntent().getExtras().getString(TAGID, "3212");
+//		title = getIntent().getExtras().getString(TITLE,"");
 		
-		tv_title.setText(title);
+		tv_title.setText("<-------->");
 
-		taobaoAdapter = new TaobaoBaseAdapter(this, mPullToRefreshGridView);
+		taobaoAdapter = new AiTaobaoBaseAdapter(this, mPullToRefreshGridView);
 		mPullToRefreshGridView.setAdapter(taobaoAdapter);
 
 		mPullToRefreshGridView.setOnRefreshListener(this);
@@ -147,9 +150,14 @@ public class TaoBaoItemActivity extends Activity implements
 				long id) {
 			Log.d(TAG, "GridViewItemClickListner:"
 					+ listResults.get(position).toString());
-			GoodsItem goods = listResults.get(position);
-			showTaokeItemDetail(goods.getOpen_iid(),
-					Integer.parseInt(goods.getShop_type()));
+			AiTaoBao goods = listResults.get(position);
+			int type ;
+			if(goods.getShop_type().equals("B")){
+				type = 1;//天猫
+			}else{
+				type = 0;//淘宝
+			}
+			showTaokeItemDetail(goods.getOpen_iid(), type);
 
 		}
 
@@ -201,7 +209,7 @@ public class TaoBaoItemActivity extends Activity implements
 		new GetMessage(LOAD).execute();
 	}
 
-	private class GetMessage extends AsyncTask<Integer, Void, List<GoodsItem>> {
+	private class GetMessage extends AsyncTask<Integer, Void, List<AiTaoBao>> {
 
 		private Integer method;
 
@@ -218,25 +226,25 @@ public class TaoBaoItemActivity extends Activity implements
 		}
 
 		@Override
-		protected List<GoodsItem> doInBackground(Integer... params) {
+		protected List<AiTaoBao> doInBackground(Integer... params) {
 
-			List<GoodsItem> lists = null;
-			if (NetWorkUtil.isNetworkAvailable(TaoBaoItemActivity.this)) {
+			List<AiTaoBao> lists = null;
+			if (NetWorkUtil.isNetworkAvailable(AiTaoBaoActivity.this)) {
 				Map<String, String> map = new HashMap<String, String>();
 
 				if (method == REFRESH) {
-					page_start = 0;
+					page_start = 1;
 				} else if (method == LOAD) {
 					page_start = page_start + 1;
 				}
 				Log.i(TAG, "page_start:" + page_start + ",page_size:"
 						+ page_size);
-				map.put("tagIds", tagId);
-				map.put("pageSize", String.valueOf(page_size));
-				map.put("page", String.valueOf(page_start));
+//				map.put("tagIds", tagId);
+				map.put("page_no", String.valueOf(page_start));
+				map.put("page_size", String.valueOf(page_size));
 				// 从服务器中获取数据
-				String result = HttpUtil.doPost(map, TAOBAO_URL);
-				lists = GoodsItemService.getGoodsItemByJson(result);
+				String result = HttpUtil.doPost(map, AiTAOBAO_URL);
+				lists = AiTaoBaoService.getTaoBaoGoods(result);
 				Log.i(TAG, "淘宝：" + lists.size());
 			} else {
 				Log.e(TAG, "请打开网络连接!");
@@ -247,7 +255,7 @@ public class TaoBaoItemActivity extends Activity implements
 		}
 
 		@Override
-		protected void onPostExecute(List<GoodsItem> result) {
+		protected void onPostExecute(List<AiTaoBao> result) {
 			super.onPostExecute(result);
 			// Log.d(TAG, "result:"+result);
 			if (pDialog != null) {
@@ -264,5 +272,6 @@ public class TaoBaoItemActivity extends Activity implements
 		}
 
 	}
+
 
 }

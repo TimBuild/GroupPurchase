@@ -33,5 +33,19 @@
             android:textColor="@color/activity_main_white"
             android:textSize="17sp" />
     </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/rl_click"
+        android:layout_width="60dp"
+        android:layout_height="45dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/activity_main_title_bg" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/title_back" />
+    </RelativeLayout>
 
 </RelativeLayout>

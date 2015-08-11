@@ -13,6 +13,9 @@ public class Constants {
 	// "http://192.168.1.69:8081/PurchaseServer/rest/GoodsService/getGoods";
 	public final static String TAOBAO_URL = "http://lavie-1.wx.jaeapp.com/rest/GoodsService/getGoods";
 
+//	public final static String AiTAOBAO_URL = "http://192.168.1.69:8081/PurchaseServer/rest/GoodsService/searchGoods";
+	public final static String AiTAOBAO_URL = "http://lavie-1.wx.jaeapp.com/rest/GoodsService/searchGoods";
+
 	/**
 	 * 每页最多显示多少条数据
 	 */
@@ -22,7 +25,7 @@ public class Constants {
 	 * 分类显示的标题
 	 */
 	public static String[] taobaoTitle = { "女装", "鞋子", "包包", "配饰", "美妆", "家居",
-			"母婴", "男士" };
+			"母婴", "男士","美食" };
 	/**
 	 * 男装
 	 */
@@ -149,5 +152,17 @@ public class Constants {
 			R.drawable.muying_yizhi, R.drawable.muying_naiping,
 			R.drawable.muying_daichanbao, R.drawable.muying_yunfunaifen,
 			R.drawable.muying_paxing };
+	/**
+	 * 美食
+	 */
+	public static String[] meishi = new String[] { "巧克力", "肉食", "咖啡", "饮料",
+			"茶叶", "坚果", "果干", "水果", "糖果", "糕点", "海味即食", "饼干", "土特产" };
+	public static int[] meishi_img = new int[] { R.drawable.meishi_qiaokeli,
+			R.drawable.meishi_roushi, R.drawable.meishi_kafei,
+			R.drawable.meishi_yinliao, R.drawable.meishi_chaye,
+			R.drawable.meishi_jianguo, R.drawable.meishi_guogan,
+			R.drawable.meishi_shuiguo, R.drawable.meishi_tangguo,
+			R.drawable.meishi_gaodian, R.drawable.meishi_haiwei,
+			R.drawable.meishi_binggan, R.drawable.meishi_tutechan };
 
 }
