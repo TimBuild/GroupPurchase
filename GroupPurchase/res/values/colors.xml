@@ -11,5 +11,9 @@
     <color name="fragment_dress_transport">#efefef</color>
     <color name="fragment_dress_select">#DDE1E7</color>
     <color name="transport">#EEF3FA</color>
+    
+    <color name="aitaobao_shuxian">#C2BEBE</color>
+    <color name="textview_click_true">#EE0960</color>
+    <color name="textview_click_false">#C2BEBE</color>
 
 </resources>

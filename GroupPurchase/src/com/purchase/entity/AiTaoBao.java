@@ -53,6 +53,11 @@ public class AiTaoBao {
 		this.title = title;
 	}
 
+	/**
+	 * 商品价格
+	 * 
+	 * @return
+	 */
 	public String getPrice() {
 		return price;
 	}
@@ -61,6 +66,11 @@ public class AiTaoBao {
 		this.price = price;
 	}
 
+	/**
+	 * 卖家昵称，店铺名称
+	 * 
+	 * @return
+	 */
 	public String getNick() {
 		return nick;
 	}
@@ -69,6 +79,11 @@ public class AiTaoBao {
 		this.nick = nick;
 	}
 
+	/**
+	 * 店铺类型B为天猫，C为集市
+	 * 
+	 * @return
+	 */
 	public String getShop_type() {
 		return shop_type;
 	}
@@ -77,6 +92,11 @@ public class AiTaoBao {
 		this.shop_type = shop_type;
 	}
 
+	/**
+	 * 累计成交量
+	 * 
+	 * @return
+	 */
 	public String getCommission_num() {
 		return commission_num;
 	}
@@ -85,6 +105,11 @@ public class AiTaoBao {
 		this.commission_num = commission_num;
 	}
 
+	/**
+	 * 卖家信用等级
+	 * 
+	 * @return
+	 */
 	public String getSeller_credit_score() {
 		return seller_credit_score;
 	}

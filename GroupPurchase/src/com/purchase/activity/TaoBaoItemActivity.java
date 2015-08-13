@@ -51,7 +51,7 @@ public class TaoBaoItemActivity extends Activity implements
 
 	private PullToRefreshGridView mPullToRefreshGridView;
 	private TextView tv_title;
-	private RelativeLayout rl_back,rl_click;
+	private RelativeLayout rl_back;
 
 	private final static int LOAD = 1;
 	private final static int REFRESH = 2;
@@ -96,7 +96,7 @@ public class TaoBaoItemActivity extends Activity implements
 		mPullToRefreshGridView = (PullToRefreshGridView) findViewById(R.id.dressGridView);
 		tv_title = (TextView) findViewById(R.id.title_menu_text);
 		rl_back = (RelativeLayout) findViewById(R.id.rl_back);
-		rl_click = (RelativeLayout) findViewById(R.id.rl_click);
+//		rl_click = (RelativeLayout) findViewById(R.id.rl_click);
 		
 		// 初始化数据源
 		initIndicator();
@@ -128,13 +128,6 @@ public class TaoBaoItemActivity extends Activity implements
 			public void onClick(View v) {
 				finish();
 				overridePendingTransition(R.anim.in_from_left, R.anim.out_from_right);
-			}
-		});
-		//改变显示的格式
-		rl_click.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
 			}
 		});
 

@@ -1,33 +1,12 @@
 package com.purchase.activity;
 
-import static com.purchase.adapter.TaoGridViewAdapter.TAGID;
-import static com.purchase.adapter.TaoGridViewAdapter.TITLE;
-import static com.purchase.global.Constants.PAGE_SIZE;
 import static com.purchase.global.Constants.AiTAOBAO_URL;
+import static com.purchase.global.Constants.PAGE_SIZE;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.alibaba.sdk.android.AlibabaSDK;
-import com.alibaba.sdk.android.trade.ItemService;
-import com.alibaba.sdk.android.trade.callback.TradeProcessCallback;
-import com.alibaba.sdk.android.trade.model.TradeResult;
-import com.handmark.pulltorefresh.library.ILoadingLayout;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshGridView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.matrix.grouppurchase.R;
-import com.purchase.adapter.AiTaobaoBaseAdapter;
-import com.purchase.adapter.TaobaoBaseAdapter;
-import com.purchase.entity.AiTaoBao;
-import com.purchase.service.AiTaoBaoService;
-import com.purchase.service.GoodsItemService;
-import com.purchase.util.HttpUtil;
-import com.purchase.util.NetWorkUtil;
-import com.purchase.view.ProgressDialog;
-import com.taobao.tae.sdk.webview.TaeWebViewUiSettings;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -37,24 +16,51 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.alibaba.sdk.android.AlibabaSDK;
+import com.alibaba.sdk.android.trade.ItemService;
+import com.alibaba.sdk.android.trade.callback.TradeProcessCallback;
+import com.alibaba.sdk.android.trade.model.TradeResult;
+import com.handmark.pulltorefresh.library.ILoadingLayout;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.matrix.grouppurchase.R;
+import com.purchase.adapter.AiTaobaoBaseAdapter;
+import com.purchase.entity.AiTaoBao;
+import com.purchase.service.AiTaoBaoService;
+import com.purchase.util.HttpUtil;
+import com.purchase.util.NetWorkUtil;
+import com.purchase.view.ProgressDialog;
+import com.taobao.tae.sdk.webview.TaeWebViewUiSettings;
 
 public class AiTaoBaoActivity extends Activity implements
-		OnRefreshListener2<GridView> {
-
+		OnRefreshListener2<ListView>, OnClickListener {
 
 	private static String TAG = "AiTaoBaoActivity";
 	private AiTaobaoBaseAdapter taobaoAdapter;
 
-	private PullToRefreshGridView mPullToRefreshGridView;
+	private PullToRefreshListView mPullToRefreshListView;
 	private TextView tv_title;
-	private RelativeLayout rl_back,rl_click;
+	private RelativeLayout rl_back;
+
+	private TextView tv_zonghe, tv_xiaoliang, tv_jiage;
+	private LinearLayout lin_jiage;//显示上下按钮的Linearlayout组件
+	private ImageView iv_jiage_up,iv_jiage_down;//显示价格优先上下的组件
 
 	private final static int LOAD = 1;
 	private final static int REFRESH = 2;
@@ -66,8 +72,15 @@ public class AiTaoBaoActivity extends Activity implements
 	private int page_start = 1;
 	private int page_size = PAGE_SIZE;
 
-//	private String tagId;
-//	private String title;
+	private String sort_aitaobao = "default";
+	
+	/**
+	 * 判断点击价格排序的次数
+	 */
+	private Integer jiageNum = 0;
+
+	// private String tagId;
+	// private String title;
 	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -79,69 +92,80 @@ public class AiTaoBaoActivity extends Activity implements
 				listResults.clear();
 				listResults.addAll(0, lists);
 				taobaoAdapter.setGoodsData(listResults);
-				mPullToRefreshGridView.onRefreshComplete();
+				mPullToRefreshListView.onRefreshComplete();
+				taobaoAdapter.notifyDataSetChanged();
+				
+				mPullToRefreshListView.getRefreshableView().setSelection(0);
 				break;
 
 			case LOAD:
 				listResults.addAll(lists);
 				taobaoAdapter.setGoodsData(listResults);
-				mPullToRefreshGridView.onRefreshComplete();
+				mPullToRefreshListView.onRefreshComplete();
+				taobaoAdapter.notifyDataSetChanged();
 				break;
 			}
-			taobaoAdapter.notifyDataSetChanged();
 		};
 	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fragment_selection_taobao);
-		mPullToRefreshGridView = (PullToRefreshGridView) findViewById(R.id.dressGridView);
+		setContentView(R.layout.fragment_selection_ai_taobao);
+		AlibabaSDK.asyncInit(this);
+		mPullToRefreshListView = (PullToRefreshListView) findViewById(R.id.dressGridView);
 		tv_title = (TextView) findViewById(R.id.title_menu_text);
 		rl_back = (RelativeLayout) findViewById(R.id.rl_back);
-		rl_click = (RelativeLayout) findViewById(R.id.rl_click);
+
+		tv_zonghe = (TextView) findViewById(R.id.tv_zonghe);
+		tv_xiaoliang = (TextView) findViewById(R.id.tv_xiaoliang);
+		tv_jiage = (TextView) findViewById(R.id.tv_jiage);
 		
+		lin_jiage = (LinearLayout) findViewById(R.id.lin_jiage);
+		iv_jiage_up = (ImageView) findViewById(R.id.iv_jiage_up);
+		iv_jiage_down = (ImageView) findViewById(R.id.iv_jiage_down);
+
+		tv_zonghe.setOnClickListener(this);
+		tv_xiaoliang.setOnClickListener(this);
+		tv_jiage.setOnClickListener(this);
+
 		// 初始化数据源
 		initIndicator();
-		
-//		tagId = getIntent().getExtras().getString(TAGID, "3212");
-//		title = getIntent().getExtras().getString(TITLE,"");
-		
-		tv_title.setText("<-------->");
 
-		taobaoAdapter = new AiTaobaoBaseAdapter(this, mPullToRefreshGridView);
-		mPullToRefreshGridView.setAdapter(taobaoAdapter);
+		// tagId = getIntent().getExtras().getString(TAGID, "3212");
+		// title = getIntent().getExtras().getString(TITLE,"");
 
-		mPullToRefreshGridView.setOnRefreshListener(this);
-		
+		tv_title.setText("衬衫");
+
+		taobaoAdapter = new AiTaobaoBaseAdapter(this, mPullToRefreshListView);
+		mPullToRefreshListView.setAdapter(taobaoAdapter);
+
+		mPullToRefreshListView.setOnRefreshListener(this);
+
 		pDialog = ProgressDialog.createLoadingDialog(this, "正在刷新中...");
 
 		if (NetWorkUtil.isNetworkAvailable(this)) {
-			new GetMessage(REFRESH).execute();
+			new GetMessage(REFRESH).execute(sort_aitaobao);
 		} else {
 			NetWorkUtil.showNoNetWorkDialog(this);
 		}
-		mPullToRefreshGridView
+		mPullToRefreshListView
 				.setOnItemClickListener(new GridViewItemClickListner());
-		
-		//返回上级菜单
+
+		// 返回上级菜单
 		rl_back.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				finish();
-				overridePendingTransition(R.anim.in_from_left, R.anim.out_from_right);
+				overridePendingTransition(R.anim.in_from_left,
+						R.anim.out_from_right);
 			}
 		});
-		//改变显示的格式
-		rl_click.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-			}
-		});
+		
 
 	};
+	
 
 	private class GridViewItemClickListner implements OnItemClickListener {
 
@@ -151,11 +175,11 @@ public class AiTaoBaoActivity extends Activity implements
 			Log.d(TAG, "GridViewItemClickListner:"
 					+ listResults.get(position).toString());
 			AiTaoBao goods = listResults.get(position);
-			int type ;
-			if(goods.getShop_type().equals("B")){
-				type = 1;//天猫
-			}else{
-				type = 0;//淘宝
+			int type;
+			if (goods.getShop_type().equals("B")) {
+				type = 1;// 天猫
+			} else {
+				type = 0;// 淘宝
 			}
 			showTaokeItemDetail(goods.getOpen_iid(), type);
 
@@ -165,7 +189,7 @@ public class AiTaoBaoActivity extends Activity implements
 
 	protected void showTaokeItemDetail(String open_id, int type) {
 		TaeWebViewUiSettings taeWebViewUiSettings = new TaeWebViewUiSettings();
-//		taeWebViewUiSettings.title = "jsjdjijdijwidj";
+		// taeWebViewUiSettings.title = "jsjdjijdijwidj";
 		ItemService service = AlibabaSDK.getService(ItemService.class);
 		service.showItemDetailByOpenItemId(this, new TradeProcessCallback() {
 
@@ -186,30 +210,30 @@ public class AiTaoBaoActivity extends Activity implements
 	 * 设置刷新和加载的文本
 	 */
 	private void initIndicator() {
-		ILoadingLayout startLayout = mPullToRefreshGridView
+		ILoadingLayout startLayout = mPullToRefreshListView
 				.getLoadingLayoutProxy(true, false);
 		startLayout.setPullLabel("下拉刷新");
 		startLayout.setRefreshingLabel("正在刷新...");
 		startLayout.setReleaseLabel("松开刷新");
 
-		ILoadingLayout endLayout = mPullToRefreshGridView
+		ILoadingLayout endLayout = mPullToRefreshListView
 				.getLoadingLayoutProxy(false, true);
 		endLayout.setPullLabel("上拉加载更多");
 		endLayout.setRefreshingLabel("正在加载...");
 		endLayout.setReleaseLabel("松开加载");
 	}
-
+	
 	@Override
-	public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
-		new GetMessage(REFRESH).execute();
+	public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+		new GetMessage(REFRESH).execute(sort_aitaobao);
 	}
 
 	@Override
-	public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
-		new GetMessage(LOAD).execute();
+	public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+		new GetMessage(LOAD).execute(sort_aitaobao);
 	}
 
-	private class GetMessage extends AsyncTask<Integer, Void, List<AiTaoBao>> {
+	private class GetMessage extends AsyncTask<String, Void, List<AiTaoBao>> {
 
 		private Integer method;
 
@@ -226,7 +250,7 @@ public class AiTaoBaoActivity extends Activity implements
 		}
 
 		@Override
-		protected List<AiTaoBao> doInBackground(Integer... params) {
+		protected List<AiTaoBao> doInBackground(String... params) {
 
 			List<AiTaoBao> lists = null;
 			if (NetWorkUtil.isNetworkAvailable(AiTaoBaoActivity.this)) {
@@ -238,14 +262,17 @@ public class AiTaoBaoActivity extends Activity implements
 					page_start = page_start + 1;
 				}
 				Log.i(TAG, "page_start:" + page_start + ",page_size:"
-						+ page_size);
-//				map.put("tagIds", tagId);
+						+ page_size+",sortString:"+params[0]);
+				// map.put("tagIds", tagId);
+				// @FormParam("keyword"),@FormParam("page_no"),@FormParam("page_size"),@FormParam("sort")
+				map.put("keyword", "衬衫");
 				map.put("page_no", String.valueOf(page_start));
 				map.put("page_size", String.valueOf(page_size));
+				map.put("sort", params[0]);
 				// 从服务器中获取数据
 				String result = HttpUtil.doPost(map, AiTAOBAO_URL);
 				lists = AiTaoBaoService.getTaoBaoGoods(result);
-				Log.i(TAG, "淘宝：" + lists.size());
+				Log.i(TAG, "淘宝：" + lists.toString());
 			} else {
 				Log.e(TAG, "请打开网络连接!");
 			}
@@ -272,6 +299,54 @@ public class AiTaoBaoActivity extends Activity implements
 		}
 
 	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.tv_zonghe:// 综合排序
+
+			sort_aitaobao = "default";
+			lin_jiage.setVisibility(View.GONE);
+			tv_zonghe.setTextColor(getResources().getColor(R.color.textview_click_true));
+			tv_xiaoliang.setTextColor(getResources().getColor(R.color.textview_click_false));
+			tv_jiage.setTextColor(getResources().getColor(R.color.textview_click_false));
+			new GetMessage(REFRESH).execute(sort_aitaobao);
+			
+			break;
+		case R.id.tv_xiaoliang:// 销量
+			sort_aitaobao = "commissionNum_desc";
+			lin_jiage.setVisibility(View.GONE);
+			tv_xiaoliang.setTextColor(getResources().getColor(R.color.textview_click_true));
+			tv_zonghe.setTextColor(getResources().getColor(R.color.textview_click_false));
+			tv_jiage.setTextColor(getResources().getColor(R.color.textview_click_false));
+			new GetMessage(REFRESH).execute(sort_aitaobao);
+			break;
+		case R.id.tv_jiage:// 价格排序
+			
+			tv_jiage.setTextColor(getResources().getColor(R.color.textview_click_true));
+			tv_xiaoliang.setTextColor(getResources().getColor(R.color.textview_click_false));
+			tv_zonghe.setTextColor(getResources().getColor(R.color.textview_click_false));
+			lin_jiage.setVisibility(View.VISIBLE);
+			jiageNum++;//每点击一次，次数+1；
+			if(jiageNum%2 == 0){//偶数次代表价格降序排序,价格从高到低
+				iv_jiage_down.setImageResource(R.drawable.iv_navagation_down_red);
+				iv_jiage_up.setImageResource(R.drawable.iv_navagation_up_gray);
+				sort_aitaobao = "price_desc";
+			}else{
+				iv_jiage_up.setImageResource(R.drawable.iv_navagation_up_red);
+				iv_jiage_down.setImageResource(R.drawable.iv_navagation_down_gray);
+				sort_aitaobao = "price_asc";
+			}
+			new GetMessage(REFRESH).execute(sort_aitaobao);
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	
+
 
 
 }
