@@ -15,27 +15,12 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/tv_zonghe"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="综合"
-            android:textColor="@drawable/textview_bg"
-            android:textSize="18sp" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="30dp"
-            android:background="@color/aitaobao_shuxian" />
-
-        <TextView
             android:id="@+id/tv_xiaoliang"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="销量优先"
+            android:text="@string/aitaobao_xiaoliang"
             android:textColor="@drawable/textview_bg"
             android:textSize="18sp" />
 
@@ -56,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="价格优先"
+                android:text="@string/aitaobao_jiage"
                 android:textColor="@drawable/textview_bg"
                 android:textSize="18sp" />
 
@@ -65,8 +50,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:visibility="gone"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:visibility="gone" >
 
                 <ImageView
                     android:id="@+id/iv_jiage_up"
@@ -81,6 +66,21 @@
                     android:src="@drawable/iv_navagation_down_gray" />
             </LinearLayout>
         </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:background="@color/aitaobao_shuxian" />
+
+        <TextView
+            android:id="@+id/tv_zonghe"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/aitaobao_xinyong"
+            android:textColor="@drawable/textview_bg"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView

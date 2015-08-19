@@ -27,12 +27,17 @@ public class Constants {
 	public static String[] taobaoTitle = { "女装", "鞋子", "包包", "配饰", "美妆", "家居",
 			"母婴", "男士","美食" };
 	/**
+	 * 分类显示爱淘宝的标题
+	 */
+	public static String[] aitaobaoTitle = { "女装", "鞋子", "包包", "配饰", "美妆", "家居",
+		"母婴", "男士","美食" };
+	/**
 	 * 男装
 	 */
-	public static String[] man = new String[] { "背心/马甲", "衬衫", "风衣", "夹克",
-			"毛呢大衣", "棉裤", "棉衣", "牛仔裤", "皮裤", "皮衣", "Polo衫", "T恤", "卫衣", "西服",
-			"休闲裤", "羽绒服", "羽绒裤", "针织衫", "男靴", "男鞋", "男包", "打火机", "剃须刀", "手表",
-			"皮带", "男士护理", "男士香水" };
+	public static String[] man = new String[] { "背心/马甲", "男士衬衫", "男士风衣", "男士夹克",
+			"男士毛呢大衣", "男士棉裤", "男士棉衣", "男士牛仔裤", "男士皮裤", "男士皮衣", "男士Polo衫", "男士T恤", "男士卫衣", "男士西服",
+			"男士休闲裤", "男士羽绒服", "男士羽绒裤", "男士针织衫", "男靴", "男鞋", "男包", "打火机", "剃须刀", "男士手表",
+			"男士皮带", "男士护理", "男士香水" };
 	public static int[] man_img = new int[] { R.drawable.man_beixin,
 			R.drawable.man_chenshan, R.drawable.man_fengyi,
 			R.drawable.man_jiake, R.drawable.man_maonidayi,

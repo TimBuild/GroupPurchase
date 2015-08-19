@@ -35,14 +35,14 @@ public class MainTabFragment extends Fragment {
 			}
 		});
 		
-		but_ai.setOnClickListener(new OnClickListener() {
+		/*but_ai.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(), AiTaoBaoActivity.class);
 				startActivity(intent);
 			}
-		});
+		});*/
 
 		return rootView;
 

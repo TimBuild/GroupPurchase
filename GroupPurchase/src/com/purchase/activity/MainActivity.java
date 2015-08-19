@@ -2,6 +2,7 @@ package com.purchase.activity;
 
 
 import com.matrix.grouppurchase.R;
+import com.purchase.fragment.AiTaoBaoActivityFragment;
 import com.purchase.fragment.MainTabFragment;
 import com.purchase.fragment.MainTabFragment2;
 import com.purchase.fragment.TaoBaoActivityFragment;
@@ -30,7 +31,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener{
 	private String txt_Array[] = {"精选","9.9包邮","逛逛"};
 	private int mImageViewArray[] = {R.drawable.tab_home_btn,R.drawable.tab_selfinfo_btn,R.drawable.tab_square_btn};
 	
-	private Class fragmentArray[] = {MainTabFragment.class,MainTabFragment.class,TaoBaoActivityFragment.class};
+	private Class fragmentArray[] = {MainTabFragment.class,AiTaoBaoActivityFragment.class,TaoBaoActivityFragment.class};
 	private FragmentTabHost frg_tabHost;
 	//定义一个布局
 	private LayoutInflater layoutInflater;

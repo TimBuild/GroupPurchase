@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/edittext_search"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/activity_main_white_holo"
+        android:orientation="horizontal" >
+
+        <ListView
+            android:id="@+id/lv_taobao"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#f4f4f4"
+            android:divider="@null"
+            android:scrollbars="none" >
+        </ListView>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#cdcdcd" />
+
+        <FrameLayout
+            android:id="@+id/fl_taobao"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3" >
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>
