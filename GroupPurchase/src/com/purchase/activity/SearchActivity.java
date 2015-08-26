@@ -1,16 +1,13 @@
 package com.purchase.activity;
 
+import static com.purchase.adapter.SearchEdittextAdapter.mMaxMatch;
+import static com.purchase.adapter.AiTaoGridViewAdapter.TITLE;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.purchase.adapter.SearchEdittextAdapter.mMaxMatch;
-
-import com.matrix.grouppurchase.R;
-import com.purchase.adapter.SearchEdittextAdapter;
-import com.purchase.entity.SearchAutoData;
-import com.purchase.util.DialogUtil;
-
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -26,6 +23,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import com.matrix.grouppurchase.R;
+import com.purchase.adapter.SearchEdittextAdapter;
+import com.purchase.entity.SearchAutoData;
 
 public class SearchActivity extends Activity implements OnClickListener {
 
@@ -51,7 +52,7 @@ public class SearchActivity extends Activity implements OnClickListener {
 
 		init();
 
-		mSearchAdapter = new SearchEdittextAdapter(this, mMaxMatch, this,footerView,lin_search,lin_search_history);
+		mSearchAdapter = new SearchEdittextAdapter(this, mMaxMatch, this,lin_search,lin_search_history);
 		mSearchAdapter.setFootViewVisiable();
 		lv_search.setAdapter(mSearchAdapter);
 		lv_search.setOnItemClickListener(new OnItemClickListener() {
@@ -122,6 +123,11 @@ public class SearchActivity extends Activity implements OnClickListener {
 			saveSearchHistory();
 			mSearchAdapter.readSearchHistory();
 			mSearchAdapter.setFootViewVisiable();
+			Intent intent = new Intent(SearchActivity.this, AiTaoBaoActivity.class);
+			intent.putExtra(TITLE, et_search.getText().toString());
+			startActivity(intent);
+			finish();
+			
 			break;
 		case R.id.search_clear:
 			clearSearchHistory();

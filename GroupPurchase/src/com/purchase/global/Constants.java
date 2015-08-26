@@ -19,7 +19,7 @@ public class Constants {
 	/**
 	 * 每页最多显示多少条数据
 	 */
-	public final static int PAGE_SIZE = 20;
+	public final static int PAGE_SIZE = 10;
 
 	/**
 	 * 分类显示的标题

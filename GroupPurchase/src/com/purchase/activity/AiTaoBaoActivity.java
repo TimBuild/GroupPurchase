@@ -61,6 +61,7 @@ public class AiTaoBaoActivity extends Activity implements
 
 	private TextView tv_zonghe, tv_xiaoliang, tv_jiage;
 	private LinearLayout lin_jiage;// 显示上下按钮的Linearlayout组件
+	private LinearLayout lin_nodata;//显示没有数据的Linearlayout组件
 	private ImageView iv_jiage_up, iv_jiage_down;// 显示价格优先上下的组件
 
 	private final static int LOAD = 1;
@@ -89,16 +90,24 @@ public class AiTaoBaoActivity extends Activity implements
 		public void handleMessage(Message msg) {
 			@SuppressWarnings("unchecked")
 			List<AiTaoBao> lists = (List<AiTaoBao>) msg.obj;
+			
 			switch (msg.what) {
 			case REFRESH:
+				
+				if(lists.size()==0){
+//					Log.d(TAG, "----->"+lists.toString()+"-lists==null:"+(lists==null)+"-lists.size():"+lists.size());
+					lin_nodata.setVisibility(View.VISIBLE);
+				}else{
+					lin_nodata.setVisibility(View.GONE);
+					listResults.clear();
+					listResults.addAll(0, lists);
+					taobaoAdapter.setGoodsData(listResults);
+					mPullToRefreshListView.onRefreshComplete();
+					taobaoAdapter.notifyDataSetChanged();
+					
+					mPullToRefreshListView.getRefreshableView().setSelection(0);
+				}
 
-				listResults.clear();
-				listResults.addAll(0, lists);
-				taobaoAdapter.setGoodsData(listResults);
-				mPullToRefreshListView.onRefreshComplete();
-				taobaoAdapter.notifyDataSetChanged();
-
-				mPullToRefreshListView.getRefreshableView().setSelection(0);
 				break;
 
 			case LOAD:
@@ -127,6 +136,8 @@ public class AiTaoBaoActivity extends Activity implements
 		lin_jiage = (LinearLayout) findViewById(R.id.lin_jiage);
 		iv_jiage_up = (ImageView) findViewById(R.id.iv_jiage_up);
 		iv_jiage_down = (ImageView) findViewById(R.id.iv_jiage_down);
+		
+		lin_nodata = (LinearLayout) findViewById(R.id.lin_noMsg);
 
 		tv_zonghe.setOnClickListener(this);
 		tv_xiaoliang.setOnClickListener(this);

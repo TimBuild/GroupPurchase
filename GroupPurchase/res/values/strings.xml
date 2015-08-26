@@ -18,10 +18,12 @@
     <string name="aitaobao_xiaoliang">销量优先</string>
     <string name="aitaobao_jiage">价格优先</string>
     <string name="aitaobao_xinyong">信用优先</string>
+    <string name="aitaobao_nodata">暂时没有数据</string>
     
     <string name="edittext_search">请输入爱淘宝商品关键字</string>
     
     <string name="history_search">历史搜索:</string>
     <string name="history_clear_search">清空历史搜索</string>
+    
 
 </resources>

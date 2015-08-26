@@ -22,7 +22,7 @@ import android.widget.TextView;
 public class SearchEdittextAdapter extends BaseAdapter {
 	private Context context;
 	private LayoutInflater mInflater;
-	public static int mMaxMatch = 15;// 最多显示多少个选项，负数表示全部
+	public static int mMaxMatch = 20;// 最多显示多少个选项，负数表示全部
 	private OnClickListener mOnClickListener;
 
 	private final Object mLock = new Object();
@@ -32,19 +32,17 @@ public class SearchEdittextAdapter extends BaseAdapter {
 	private SearchAutoData searchAutoData;
 	private static String TAG = "SearchEdittextAdapter";
 
-	private View footerView;
 	private LinearLayout lin_search, lin_search_history;
 
 	private boolean ClearFlag = true;// 清空历史搜索标志,true为显示
 
 	public SearchEdittextAdapter(Context context, int mMaxMatch,
-			OnClickListener mOnClickListener, View footerView,
-			LinearLayout lin_search, LinearLayout lin_search_history) {
+			OnClickListener mOnClickListener, LinearLayout lin_search,
+			LinearLayout lin_search_history) {
 		super();
 		this.context = context;
 		this.mMaxMatch = mMaxMatch;
 		this.mOnClickListener = mOnClickListener;
-		this.footerView = footerView;
 		this.lin_search = lin_search;
 		this.lin_search_history = lin_search_history;
 		this.mInflater = LayoutInflater.from(context);
