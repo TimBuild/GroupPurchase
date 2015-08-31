@@ -64,7 +64,7 @@ public class DressManager {
 			
 			dresses.add(dress);
 		}
-//		System.out.println("网页文本: "+dresses.toString());
+		System.out.println("网页文本: "+dresses.toString());
 		return dresses;
 		
 	}

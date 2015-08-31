@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import com.matrix.grouppurchase.R;
 import com.purchase.activity.AiTaoBaoActivity;
+import com.purchase.activity.DiscountActivity;
 import com.purchase.activity.NinePostageActivity;
 
 public class MainTabFragment extends Fragment {
@@ -35,14 +36,14 @@ public class MainTabFragment extends Fragment {
 			}
 		});
 		
-		/*but_ai.setOnClickListener(new OnClickListener() {
+		but_ai.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(), AiTaoBaoActivity.class);
+				Intent intent = new Intent(getActivity(), DiscountActivity.class);
 				startActivity(intent);
 			}
-		});*/
+		});
 
 		return rootView;
 

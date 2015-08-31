@@ -9,12 +9,28 @@ public class Constants {
 	public final static String URL_REFRESH = "/whole/1";
 	public final static String URL_LOAD = "/whole/2";
 
-	// public final static String TAOBAO_URL =
-	// "http://192.168.1.69:8081/PurchaseServer/rest/GoodsService/getGoods";
-	public final static String TAOBAO_URL = "http://lavie-1.wx.jaeapp.com/rest/GoodsService/getGoods";
+	// 连接电脑服务器的地址
+	// public final static String API_BASE_URL = "http://192.168.1.69:8081/PurchaseServer/rest/GoodsService/";
 
-//	public final static String AiTAOBAO_URL = "http://192.168.1.69:8081/PurchaseServer/rest/GoodsService/searchGoods";
-	public final static String AiTAOBAO_URL = "http://lavie-1.wx.jaeapp.com/rest/GoodsService/searchGoods";
+	/**
+	 * 连接淘宝控制台服务器的地址
+	 */
+	public final static String API_BASE_URL = "http://lavie-1.wx.jaeapp.com/rest/GoodsService/";
+
+	/**
+	 * 淘宝商品控制台地址
+	 */
+	public final static String TAOBAO_URL = API_BASE_URL+"getGoods";
+
+	/**
+	 * 爱淘宝商品服务器地址
+	 */
+	public final static String AiTAOBAO_URL = API_BASE_URL+"searchGoods";
+
+	/**
+	 * 爱淘宝折扣商品服务器地址
+	 */
+	public final static String Discount_URL = API_BASE_URL+"searchDiscountGoods";
 
 	/**
 	 * 每页最多显示多少条数据
@@ -25,19 +41,20 @@ public class Constants {
 	 * 分类显示的标题
 	 */
 	public static String[] taobaoTitle = { "女装", "鞋子", "包包", "配饰", "美妆", "家居",
-			"母婴", "男士","美食" };
+			"母婴", "男士", "美食" };
 	/**
 	 * 分类显示爱淘宝的标题
 	 */
-	public static String[] aitaobaoTitle = { "女装", "鞋子", "包包", "配饰", "美妆", "家居",
-		"母婴", "男士","美食" };
+	public static String[] aitaobaoTitle = { "女装", "鞋子", "包包", "配饰", "美妆",
+			"家居", "母婴", "男士", "美食" };
 	/**
 	 * 男装
 	 */
-	public static String[] man = new String[] { "背心/马甲", "男士衬衫", "男士风衣", "男士夹克",
-			"男士毛呢大衣", "男士棉裤", "男士棉衣", "男士牛仔裤", "男士皮裤", "男士皮衣", "男士Polo衫", "男士T恤", "男士卫衣", "男士西服",
-			"男士休闲裤", "男士羽绒服", "男士羽绒裤", "男士针织衫", "男靴", "男鞋", "男包", "打火机", "剃须刀", "男士手表",
-			"男士皮带", "男士护理", "男士香水" };
+	public static String[] man = new String[] { "背心/马甲", "男士衬衫", "男士风衣",
+			"男士夹克", "男士毛呢大衣", "男士棉裤", "男士棉衣", "男士牛仔裤", "男士皮裤", "男士皮衣",
+			"男士Polo衫", "男士T恤", "男士卫衣", "男士西服", "男士休闲裤", "男士羽绒服", "男士羽绒裤",
+			"男士针织衫", "男靴", "男鞋", "男包", "打火机", "剃须刀", "男士手表", "男士皮带", "男士护理",
+			"男士香水" };
 	public static int[] man_img = new int[] { R.drawable.man_beixin,
 			R.drawable.man_chenshan, R.drawable.man_fengyi,
 			R.drawable.man_jiake, R.drawable.man_maonidayi,

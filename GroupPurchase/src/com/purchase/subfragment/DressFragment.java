@@ -61,6 +61,7 @@ public class DressFragment extends Fragment implements OnRefreshListener2<GridVi
 	
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
+			@SuppressWarnings("unchecked")
 			List<Dress> lists = (List<Dress>) msg.obj;
 			switch (msg.what) {
 			case REFRESH:

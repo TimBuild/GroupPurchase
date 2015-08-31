@@ -74,6 +74,11 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
+        <activity
+            android:name="com.purchase.activity.DiscountActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CommonTitleBarStyle" >
+        </activity>
     </application>
 
 </manifest>
