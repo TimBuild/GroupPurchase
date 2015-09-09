@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class AiTaobaoBaseAdapter extends BaseAdapter {
 	private List<AiTaoBao> mDressLists;
 
 	private static String TAG = "DressBaseAdapter";
+	private int mScreenWidth;
 
 	/*
 	 * public DressBaseAdapter(Context context,DressListView dressListView){
@@ -46,6 +48,11 @@ public class AiTaobaoBaseAdapter extends BaseAdapter {
 		// this.mDressLists.clear();
 		// this.mDressLists.addAll(lists);
 		this.mDressLists = lists;
+	}
+	
+	public void setScreenWidth(int mScreenWidth){
+		this.mScreenWidth = mScreenWidth/4;
+		Log.d(TAG, "MScreenWidth:"+mScreenWidth);
 	}
 
 	@Override
@@ -86,7 +93,12 @@ public class AiTaobaoBaseAdapter extends BaseAdapter {
 		// Log.d(TAG, "------>"+mDressLists.toString());
 		if (mDressLists != null && mDressLists.size() != 0) {
 			AiTaoBao tao = mDressLists.get(position);
-			Picasso.with(context).load(tao.getPic_url()).into(holder.iv_left);
+			//给图片设置固定的大小及未显示时的图片
+			Picasso.with(context).load(tao.getPic_url())
+					.placeholder(R.drawable.discount_blank)
+					.error(R.drawable.discount_blank_error)
+					.resize(mScreenWidth, mScreenWidth).centerCrop()
+					.into(holder.iv_left);
 			holder.tv_des.setText(tao.getTitle());
 			holder.tv_price_info.setText(tao.getPrice());
 			holder.tv_nick.setText(tao.getNick());

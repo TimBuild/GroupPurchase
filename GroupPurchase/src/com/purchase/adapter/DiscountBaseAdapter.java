@@ -82,12 +82,13 @@ public class DiscountBaseAdapter extends BaseAdapter {
 //		 Log.d(TAG, "------>"+mScreenWidth);
 		if (mDressLists != null && mDressLists.size() != 0) {
 			DiscountBao discount = mDressLists.get(position);
+			// 给图片设置固定的大小
 			Picasso.with(context).load(discount.getPic_url())
 					.placeholder(R.drawable.discount_blank)
 					.error(R.drawable.discount_blank_error)
 					.resize(mScreenWidth, mScreenWidth).centerCrop()
 					.into(holder.iv_left);
-			// 给图片设置固定的大小
+			
 			holder.tv_des.setText(discount.getTitle());
 			holder.tv_price_info.setText(discount.getPrice());
 			holder.tv_coupon_price.setText(discount.getCoupon_price());

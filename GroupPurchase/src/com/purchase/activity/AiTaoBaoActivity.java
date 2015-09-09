@@ -12,11 +12,13 @@ import java.util.Map;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -82,6 +84,8 @@ public class AiTaoBaoActivity extends Activity implements
 	 * 判断点击价格排序的次数
 	 */
 	private Integer jiageNum = 0;
+	
+	private int mScreenWidth;//屏幕宽度
 
 	// private String tagId;
 	// private String title;
@@ -125,6 +129,13 @@ public class AiTaoBaoActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.fragment_selection_ai_taobao);
 //		AlibabaSDK.asyncInit(this);
+		
+		//获得屏幕宽度
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		mScreenWidth = size.x;//获得屏幕宽度
+		
 		mPullToRefreshListView = (PullToRefreshListView) findViewById(R.id.dressGridView);
 		tv_title = (TextView) findViewById(R.id.title_menu_text);
 		rl_back = (RelativeLayout) findViewById(R.id.rl_back);
@@ -153,6 +164,7 @@ public class AiTaoBaoActivity extends Activity implements
 
 		taobaoAdapter = new AiTaobaoBaseAdapter(this, mPullToRefreshListView);
 		mPullToRefreshListView.setAdapter(taobaoAdapter);
+		taobaoAdapter.setScreenWidth(mScreenWidth);
 
 		mPullToRefreshListView.setOnRefreshListener(this);
 

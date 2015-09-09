@@ -15,5 +15,9 @@
     <color name="aitaobao_shuxian">#C2BEBE</color>
     <color name="textview_click_true">#EE0960</color>
     <color name="textview_click_false">#C2BEBE</color>
+    
+    <color name="bottom_tab_normal">#c8bca5</color>
+    <color name="bottom_tab_press">#8b572a</color>
+    
 
 </resources>

@@ -17,9 +17,9 @@
         android:background="@drawable/search_btn_background"
         android:gravity="center"
         android:text="搜索"
-        android:visibility="gone"
         android:textSize="12sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/rlSearchFrameDelete"
@@ -34,11 +34,21 @@
             android:layout_width="fill_parent"
             android:layout_height="25dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/search_frame"
+            android:background="@drawable/textview_radius_border"
             android:hint="@string/edittext_search"
             android:paddingLeft="32dp"
             android:singleLine="true"
             android:textSize="12sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/etSearch"
+            android:layout_alignLeft="@id/etSearch"
+            android:layout_alignTop="@id/etSearch"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/search_search" />
 
         <ImageView
             android:id="@+id/ivDeleteText"
